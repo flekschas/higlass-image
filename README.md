@@ -3,7 +3,7 @@
 > Display your favorite GeoJSON annotation right in HiGlass.
 
 [![HiGlass](https://img.shields.io/badge/higlass-👍-red.svg?colorB=0f5d92)](http://higlass.io)
-[![Build Status](https://img.shields.io/travis/hms-dbmi/higlass-app/master.svg?colorB=0f5d92)](https://travis-ci.org/hms-dbmi/higlass-app)
+[![Build Status](https://img.shields.io/travis/flekschas/higlass-image/master.svg?colorB=0f5d92)](https://travis-ci.org/flekschas/higlass-image)
 
 **Note**: This is the source code for the GeoJSON track only! You might want to check out the following repositories as well:
 
@@ -14,7 +14,7 @@
 ## Installation
 
 ```
-npm install higlass-geojson
+npm install higlass-image
 ```
 
 ## Usage
@@ -22,7 +22,7 @@ npm install higlass-geojson
 1. Make sure you load this track prior to `hglib.js`. For example:
 
 ```
-<script src="hiGeoJson.js"></script>
+<script src="higlass-image.js"></script>
 <script src="hglib.js"></script>
 <script>
   ...
@@ -34,37 +34,35 @@ npm install higlass-geojson
 ```
 {
   ...
-  {
-    server: 'http://localhost:8001/api/v1',
-    tilesetUid: 'my-fancy-geojson-db',
-    uid: 'my-fancy-geojson-db',
-    type: 'geo-json',
-    options: {
-      labelColor: 'red',
-      labelPosition: 'hidden',
-      trackBorderWidth: 0,
-      trackBorderColor: 'red',
-      rectangleDomainFillColor: 'red',
-      rectangleDomainFillOpacity: 0.25,
-      rectangleDomainStrokeColor: 'red',
-      rectangleDomainOpacity: 1,
-      rectanlgeMinSize: 3,
-      minSquareSize: 4,
-      polygonMinBoundingSize: 5,
-      name: 'My Fancy GeoJSON Stuff',
+  center: [
+    {
+      uid: 'c1',
+      type: 'combined',
+      options: {},
+      contents: [
+        {
+          uid: 'my-fancy-tiled-image',
+          type: 'image-tiles',
+          server: 'http://localhost:8001/api/v1/',
+          tilesetUid: 'my-fancy-tiled-image',
+          options: {
+            name: 'My fancy tiled image'
+          }
+        },
+      ],
     },
-  },
+  ],
   ...
 }
 ```
 
-3. Finally, add `GeoJsonTrack` to the option's `tracks` property when initializing HiGlass with `createHgComponent()` like so:
+3. Finally, add `TiledImageTrack` to the option's `tracks` property when initializing HiGlass with `createHgComponent()` like so:
 
 ```
 window.hglib.createHgComponent(
   document.getElementById('demo'),
   testViewConfig,
-  { tracks: ['GeoJsonTrack'], bounded: true },
+  { tracks: ['TiledImageTrack'], bounded: true },
 );
 ```
 
@@ -75,7 +73,7 @@ Take a look at [`src/index.html`](src/index.html) for an example.
 ### Installation
 
 ```bash
-$ git clone https://github.com/flekschas/higlass-geojson && higlass-geojson
+$ git clone https://github.com/flekschas/higlass-image && higlass-image
 $ npm install
 ```
 
