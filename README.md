@@ -1,12 +1,17 @@
-# GeoJSON Track for HiGlass
+# HiGlass Image
 
-> Display your favorite GeoJSON annotation right in HiGlass.
+> A collection of tracks for viewing image data in HiGlass
 
 [![HiGlass](https://img.shields.io/badge/higlass-👍-red.svg?colorB=0f5d92)](http://higlass.io)
 [![Build Status](https://img.shields.io/travis/flekschas/higlass-image/master.svg?colorB=0f5d92)](https://travis-ci.org/flekschas/higlass-image)
 
-**Note**: This is the source code for the GeoJSON track only! You might want to check out the following repositories as well:
+![HiGlass showing](/teaser.jpg?raw=true "Rio de Janeiro by Rio HK")
 
+HiGlass in dark mode showing a beautiful gigapixel image of [Rio de Janeiro](http://www.gigapan.com/gigapans/66020) by [The Rio de Janeiro - Hong Kong Connection](https://www.visgraf.impa.br/riohk/)
+
+**Note**: This is the source code for image tracks only! You might want to check out the following repositories as well:
+
+- **Image tiles to SQLite converter:** https://github.com/flekschas/image-tiles-to-sqlite
 - HiGlass viewer: https://github.com/hms-dbmi/higlass
 - HiGlass server: https://github.com/hms-dbmi/higlass-server
 - HiGlass docker: https://github.com/hms-dbmi/higlass-docker
@@ -18,6 +23,8 @@ npm install higlass-image
 ```
 
 ## Usage
+
+_Note:_ We assume that you have create and ingested a SQLite-based image tileset database. If you're asking yourself "what the fu\*! are they talking about" please check out our [image tiles to SQLite converter](https://github.com/flekschas/image-tiles-to-sqlite).
 
 1. Make sure you load this track prior to `hglib.js`. For example:
 
@@ -56,17 +63,9 @@ npm install higlass-image
 }
 ```
 
-3. Finally, add `TiledImageTrack` to the option's `tracks` property when initializing HiGlass with `createHgComponent()` like so:
-
-```
-window.hglib.createHgComponent(
-  document.getElementById('demo'),
-  testViewConfig,
-  { tracks: ['TiledImageTrack'], bounded: true },
-);
-```
-
 Take a look at [`src/index.html`](src/index.html) for an example.
+
+3. You did it! We're so proud of you 🎉. You are truly the best!
 
 ## Development
 
