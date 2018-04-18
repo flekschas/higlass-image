@@ -3,6 +3,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>HiGlass</title>
+<style type="text/css">
+html,
+body {
+  background: black !important;
+}
+</style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
 <link rel="stylesheet" href="../node_modules/HiGlass/dist/styles/hglib.css">
 
@@ -28,17 +34,12 @@ const testViewConfig = {
   exportViewUrl: 'http://higlass.io/api/v1/viewconfs/',
   views: [
     {
-      uid: 'aa',
       initialXDomain: [0, 454330],
       initialYDomain: [0, 149278],
       tracks: {
-        top: [],
-        left: [],
         center: [
           {
-            uid: 'c1',
             type: 'combined',
-            options: {},
             contents: [
               {
                 uid: 'i1',
@@ -46,21 +47,18 @@ const testViewConfig = {
                 server: 'http://localhost:8001/api/v1/',
                 tilesetUid: 'gigapan-66020',
                 options: {
-                  name: 'Gigapan Image 66020'
-                }
+                  name: 'Gigapan Image 66020',
+                },
               },
             ],
           },
         ],
-        right: [],
-        bottom: [],
       },
       layout: {
         w: 12,
         h: 12,
         x: 0,
         y: 0,
-        i: 'aa',
         moved: false,
         static: false,
       },
@@ -73,7 +71,7 @@ const testViewConfig = {
 window.hglib.createHgComponent(
   document.getElementById('demo'),
   testViewConfig,
-  { tracks: ['TiledImageTrack'], bounded: true },
+  { bounded: true, isDarkTheme: true },
 );
 </script>
 </html>
