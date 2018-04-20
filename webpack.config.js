@@ -1,6 +1,7 @@
 const path = require('path');
 
 const autoprefixer = require('autoprefixer');
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
@@ -12,6 +13,12 @@ module.exports = {
     library: 'higlass-image',
     libraryTarget: 'umd',
     path: path.resolve(__dirname, 'dist'),
+  },
+  devServer: {
+    contentBase: [
+      path.join(__dirname, 'node_modules/higlass/build'),
+    ],
+    watchContentBase: true,
   },
   optimization: {
     minimizer: [
@@ -114,5 +121,6 @@ module.exports = {
       filename: './index.html',
     }),
     new UnminifiedWebpackPlugin(),
+    // new BundleAnalyzerPlugin(),
   ],
 };
