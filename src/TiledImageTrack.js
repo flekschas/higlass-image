@@ -605,6 +605,9 @@ const ImageTilesTrack = (HGC, ...args) => {
   return new ImageTilesTrackClass(...args);
 };
 
+const parser = new DOMParser();
+const insetsStr = '<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="1.5"><path d="M9.5 10L12 7.5l3.5 3.5M.5 12L6 6l4.583 5.5" fill="none" stroke="currentColor"/><path d="M16 14H0V2h16v12zM1 3v10h14V3H1z" fill="currentColor"/><circle cx="9.5" cy="5.5" r="1" fill="none" stroke="currentColor"/></svg>';
+
 ImageTilesTrack.config = {
   type: 'image-tiles',
   datatype: ['image-tiles'],
@@ -612,7 +615,7 @@ ImageTilesTrack.config = {
   orientation: '2d',
   hidden: true,
   name: 'Image Tiles',
-  thumbnail: null,
+  thumbnail: parser.parseFromString(insetsStr, 'text/xml').documentElement,
 };
 
 export default ImageTilesTrack;
