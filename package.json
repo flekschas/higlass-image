@@ -1,6 +1,6 @@
 {
   "name": "higlass-image",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A collection of tracks for viewing image data in HiGlass",
   "author": "Fritz Lekschas",
   "license": "MIT",
@@ -48,7 +48,7 @@
   "scripts": {
     "build": "webpack --mode production",
     "start": "webpack-dev-server --mode development --open",
-    "prerelease": "rm -rf dist/*; npm run build; zip -r dist.zip dist"
+    "prerelease": "rm -rf dist/*; npm run build"
   },
   "dependencies": {
     "higlass-register": "^0.1.0",
