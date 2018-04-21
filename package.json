@@ -2,7 +2,6 @@
   "name": "higlass-image",
   "version": "0.1.0",
   "description": "A collection of tracks for viewing image data in HiGlass",
-  "private": true,
   "author": "Fritz Lekschas",
   "license": "MIT",
   "contributors": [
