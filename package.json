@@ -1,6 +1,6 @@
 {
   "name": "higlass-image",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A collection of tracks for viewing image data in HiGlass",
   "keywords": [
     "HiGlass",
@@ -16,6 +16,10 @@
       "url": "http://github.com/flekschas"
     }
   ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/flekschas/higlass-image.git"
+  },
   "main": "src/index.js",
   "unpkg": "dist/higlass-image.min.js",
   "files": [
