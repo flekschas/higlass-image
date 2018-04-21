@@ -21,6 +21,7 @@ deploy:
       tags: true
       repo: flekschas/higlass-image
   - provider: npm
+    skip_cleanup: true
     email: service@lekschas.de
     api_key:
       secure: dCpifsijIOJl3iDVGUd0qUGPCver3Ee1irVXHQ2lYpTFjt8kdmeAFYJ9+amgkP29yLbCSmx0vC9rs+Ly7uLYGqkuhe9YSQzwWTXTzSFLJz2rXG7Ga5rebfm39W9YaTr3xPbrHYgLyhnUSU9yZhZneTWlW4JpJVDY5ke8Sfv9lz9EeVZ0Rro25Pneog3GhGa8M4QyWEr4GQ7lUxB67YWKLJXL4AWK1hU11MAEycBJRDWUdXXNqKS8kFMxyrbkqZNjIoO6KcJ1WFySKZIt1TljaxmIqstlWfuY/xmaegd9tqGkltqwYWDlimtHZtV3sJM+me2h5xQ8Rw+b5icY7DetBW3iEH0j2R4D95EDUIwA1XrT2O5BNs9stHVLK8Xx511o4/wbY0Ml91yBijKCTbz0e5HF0AI7zKCFPW3HNb8Bx8xPsKdP987n9MAGtfn+xGLWn7IdA9RzitiNF6a54L3QLgOqNvylFMn2xv6Z4yfP7bA7etxNXNf6cjgWulOOghahv2N/rdztes2A+1S+hWd9TdTkYy0b/CsqGXCE9QOHBdY4UmaDR2EoBJNO139GKvZvRyyZju6kjHUr07AKPJmXvS+h0wW++TFq9SzWxn/9dHq2tJT3wQG7a3wtaZqOREE/7F7xcGaTqY7WxLIZy9cOKmwuFmXYAkUVHFSQ03FEf/s=
