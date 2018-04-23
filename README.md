@@ -2,12 +2,15 @@
 
 > A collection of tracks for viewing image data in HiGlass
 
-[![HiGlass](https://img.shields.io/badge/higlass-👍-red.svg?colorB=0f5d92)](http://higlass.io)
-[![Build Status](https://img.shields.io/travis/flekschas/higlass-image/master.svg?colorB=0f5d92)](https://travis-ci.org/flekschas/higlass-image)
+[![HiGlass](https://img.shields.io/badge/higlass-👍-red.svg?colorB=000000)](http://higlass.io)
+[![Demo](https://img.shields.io/badge/demo-🙈-red.svg?colorB=000000)](http://higlass-image.lekschas.de/)
+[![Build Status](https://img.shields.io/travis/flekschas/higlass-image/master.svg?colorB=000000)](https://travis-ci.org/flekschas/higlass-image)
 
 ![HiGlass showing](/teaser.jpg?raw=true "Rio de Janeiro by Rio HK")
 
 HiGlass in dark mode showing a beautiful gigapixel image of [Rio de Janeiro](http://www.gigapan.com/gigapans/66020) by [The Rio de Janeiro - Hong Kong Connection](https://www.visgraf.impa.br/riohk/)
+
+**Live Demo:** [http://higlass-image.lekschas.de](http://higlass-image.lekschas.de)
 
 **Note**: This is the source code for image tracks only! You might want to check out the following repositories as well:
 
