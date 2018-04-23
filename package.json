@@ -58,6 +58,7 @@
   "scripts": {
     "build": "webpack --mode production",
     "start": "webpack-dev-server --mode development --open",
+    "ghp": "npm run prerelease; rm -rf ../higlass-image-ghp/*; cp -r ./dist/* ../higlass-image-ghp/; touch ../higlass-image-ghp/.nojekyll; touch ../higlass-image-ghp/CNAME; echo 'higlass-image.lekschas.de' > ../higlass-image-ghp/CNAME; cp ./node_modules/higlass/dist/scripts/hglib.js ../higlass-image-ghp/; cp ./node_modules/higlass/dist/styles/hglib.css ../higlass-image-ghp/",
     "prerelease": "rm -rf dist/*; npm run build; zip -r dist.zip dist"
   },
   "dependencies": {
