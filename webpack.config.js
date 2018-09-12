@@ -7,7 +7,7 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const UnminifiedWebpackPlugin = require('unminified-webpack-plugin');
 
-module.exports = {
+module.exports = (envs, argv) => ({
   output: {
     filename: 'higlass-image.min.js',
     library: 'higlass-image',
@@ -92,16 +92,6 @@ module.exports = {
           'sass-loader',  // compiles Sass to CSS
         ],
       },
-      // Extract them HTML files
-      {
-        test: /\.html$/,
-        use: [
-          {
-            loader: 'html-loader',
-            options: { minimize: true },
-          },
-        ],
-      },
       {
         test: /.*\.(gif|png|jpe?g|svg)$/i,
         use: [
@@ -119,8 +109,9 @@ module.exports = {
     new HtmlWebPackPlugin({
       template: './src/index.html',
       filename: './index.html',
+      isProduction: argv.mode === 'production',
     }),
     new UnminifiedWebpackPlugin(),
     // new BundleAnalyzerPlugin(),
   ],
-};
+});
