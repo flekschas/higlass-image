@@ -1,8 +1,124 @@
-<!DOCTYPE html> <head> <meta charset=utf-8> <meta name=viewport content="width=device-width,initial-scale=1"> <title>HiGlass</title> <style type=text/css>body,html{background:#000!important}</style> <link rel=stylesheet href=https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css> <link rel=stylesheet href=hglib.css> <script src=https://cdnjs.cloudflare.com/ajax/libs/react/15.6.2/react.min.js></script> <script src=https://cdnjs.cloudflare.com/ajax/libs/react-dom/15.6.2/react-dom.min.js></script> <script src=https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.6.2/pixi.min.js></script> <script src=https://cdnjs.cloudflare.com/ajax/libs/react-bootstrap/0.32.0/react-bootstrap.min.js></script> </head> <body> <div style=height:50px /> <div id=demo style=position:absolute;left:1rem;top:1rem;bottom:1rem;right:1rem> </div>  <script type="text/javascript" src="higlass-image.min.js"></script></body> <script src=hglib.js></script> <script> const testViewConfig = {
-  editable: true,
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="author" content="Fritz Lekschas">
+  <meta name="description" content="A plugin track to display tiled images in HiGlass">
+  <meta name="keywords" content="HiGlass, Plugin Tracks, Image, Gigapixel">
+
+  <!-- Schema.org markup for Google+ -->
+  <meta itemprop="name" content="HiGlass Image Track">
+  <meta itemprop="description" content="A plugin track to display tiled images in HiGlass">
+  <meta itemprop="image" content="https://raw.githubusercontent.com/flekschas/higlass-image/master/teaser.jpg">
+
+  <!-- Twitter Card data -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@flekschas">
+  <meta name="twitter:title" content="HiGlass Image Track">
+  <meta name="twitter:description" content="A plugin track to display tiled images in HiGlass">
+  <meta name="twitter:creator" content="@flekschas">
+  <!-- Twitter summary card with large image must be at least 280x150px -->
+  <meta name="twitter:image:src" content="https://raw.githubusercontent.com/flekschas/higlass-image/master/teaser.jpg">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="HiGlass Image Track" />
+  <meta property="og:description" content="A plugin track to display tiled images in HiGlass" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://github.com/flekschas/higlass-image" />
+  <meta property="og:image" content="https://raw.githubusercontent.com/flekschas/higlass-geojson/master/teaser.jpg" />
+
+  <title>HiGlass Image Tracks</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
+
+  
+  <link rel="stylesheet" href="https://unpkg.com/higlass/dist/styles/hglib.css">
+  
+
+  <style type="text/css">
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      background: black !important;
+    }
+    #demo {
+      position: absolute;
+      left: 1rem;
+      top: 1rem;
+      bottom: 1rem;
+      right: 1rem;
+    }
+    #info {
+      position: absolute;
+      z-index: 1;
+      left: 1rem;
+      top: 1rem;
+      right: 1rem;
+      height: 5rem;
+      color: #999;
+      line-height: 1.25rem;
+      background: rgba(0, 0, 0, 0.85);
+    }
+    #info a {
+      color: #fff;
+    }
+    #info .left {
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 30%;
+      bottom: 0;
+    }
+    #info .right {
+      position: absolute;
+      left: 70%;
+      top: 0;
+      right: 0;
+      bottom: 0;
+    }
+    #info .right a {
+      position: absolute;
+      display: block;
+      top: 0;
+      right: 0;
+      bottom: 1rem;
+      left: 1rem;
+      color: #fff;
+      text-align: center;
+      line-height: 4rem;
+      background: #222;
+      border-radius: 0.25rem;
+    }
+  </style>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.2/react.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/15.6.2/react-dom.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.6.2/pixi.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-bootstrap/0.32.0/react-bootstrap.min.js"></script>
+</head>
+<body>
+  <div id="info">
+    <div class="left">
+      <p>
+        This track lets you display image tiles resembling gigapixel images in <a href="https://higlass.io/" target="_blank">HiGlass</a>.
+      </p>
+      <p>
+        This example shows Rio de Janeiro and was taken by the wonderful <a href="https://www.visgraf.impa.br/riohk/" target="_blank">Rio de Janeiro - Hong Kong Connection</a>.
+      </p>
+    </div>
+    <div class="right">
+      <a href="https://github.com/flekschas/higlass-image">Source Code</a>
+    </div>
+  </div>
+  <div id="demo"></div>
+<script type="text/javascript" src="higlass-image.min.js"></script></body>
+
+<script src="https://unpkg.com/higlass/dist/scripts/hglib.js"></script>
+
+<script>
+const viewConfig = {
+  editable: false,
   zoomFixed: false,
-  trackSourceServers: ['http://higlass.io/api/v1'],
-  exportViewUrl: 'http://higlass.io/api/v1/viewconfs/',
   views: [
     {
       initialXDomain: [0, 454330],
@@ -11,11 +127,10 @@
         center: [
           {
             type: 'image-tiles',
-            server: 'http://resgen.io/api/v1/',
-            tilesetUid: 'eq9t-f0vReCuHnm8wc2mDA',
-            options: {
-              name: 'Gigapan Image 66020',
-            },
+            // server: 'http://resgen.io/api/v1/',
+            // tilesetUid: 'eq9t-f0vReCuHnm8wc2mDA',
+            server: 'https://vcg-higlass.rc.fas.harvard.edu/api/v1/',
+            tilesetUid: 'rio-hk',
           },
         ],
       },
@@ -35,6 +150,8 @@
 
 window.hglib.createHgComponent(
   document.getElementById('demo'),
-  testViewConfig,
+  viewConfig,
   { bounded: true, isDarkTheme: true },
-); </script> 
+);
+</script>
+</html>
