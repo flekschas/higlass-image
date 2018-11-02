@@ -149,7 +149,7 @@ const viewConfig = {
   locationLocks: { locksByViewUid: {}, locksDict: {} },
 };
 
-window.hglib.createHgComponent(
+window.hglib.viewer(
   document.getElementById('demo'),
   viewConfig,
   { bounded: true, isDarkTheme: true },
