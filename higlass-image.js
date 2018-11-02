@@ -46,17 +46,32 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, {
-/******/ 				configurable: false,
-/******/ 				enumerable: true,
-/******/ 				get: getter
-/******/ 			});
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
 /******/ 		}
 /******/ 	};
 /******/
 /******/ 	// define __esModule on exports
 /******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
 /******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
 /******/ 	};
 /******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
@@ -76,7 +91,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 9);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -131,1264 +146,101 @@ module.exports = g;
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-module.exports = __webpack_require__(9);
+module.exports = __webpack_require__(2);
 
 
 /***/ }),
 /* 2 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
+/* WEBPACK VAR INJECTION */(function(Buffer) {// The MIT License (MIT)
+//
+// Copyright (c) 2014 Jonas Finnemann Jensen
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
 
-// CONCATENATED MODULE: ./node_modules/higlass-register/src/index.js
-window.higlassTracks = window.higlassTracks || {};
-window.higlassTracksByType = window.higlassTracksByType || {};
+var uuid = __webpack_require__(7);
 
-const register = (trackDef) => {
-  window.higlassTracks[trackDef.name] = trackDef;
-  window.higlassTracksByType[trackDef.config.type] = trackDef;
+/**
+ * Returns the given uuid as a 22 character slug. This can be a regular v4
+ * slug or a "nice" slug.
+ */
+exports.encode = function(uuid_) {
+  var bytes   = uuid.parse(uuid_);
+  var base64  = (new Buffer(bytes)).toString('base64');
+  var slug = base64
+              .replace(/\+/g, '-')  // Replace + with - (see RFC 4648, sec. 5)
+              .replace(/\//g, '_')  // Replace / with _ (see RFC 4648, sec. 5)
+              .substring(0, 22);    // Drop '==' padding
+  return slug;
 };
 
-/* harmony default export */ var src = (register);
-
-// EXTERNAL MODULE: ./node_modules/slugid/index.js
-var slugid = __webpack_require__(1);
-var slugid_default = /*#__PURE__*/__webpack_require__.n(slugid);
-
-// CONCATENATED MODULE: ./src/TiledImageTrack.js
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-var TiledImageTrack_ImageTilesTrack = function ImageTilesTrack(HGC) {
-  for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    args[_key - 1] = arguments[_key];
-  }
-
-  if (!new.target) {
-    throw new Error('Uncaught TypeError: Class constructor cannot be invoked without "new"');
-  }
-
-  // HiGlass Code
-  var PIXI = HGC.libraries.PIXI;
-
-  // Components
-
-  var DataFetcher = HGC.factories.DataFetcher;
-
-  // Services
-
-  var tileProxy = HGC.services.tileProxy;
-
-  // Utils
-
-  var _HGC$utils = HGC.utils,
-      debounce = _HGC$utils.debounce,
-      trimTrailingSlash = _HGC$utils.trimTrailingSlash;
-
-  // Configs
-
-  var ZOOM_DEBOUNCE = HGC.configs.ZOOM_DEBOUNCE;
-
-  var ImageTilesTrackClass = function (_HGC$tracks$PixiTrack) {
-    _inherits(ImageTilesTrackClass, _HGC$tracks$PixiTrack);
-
-    function ImageTilesTrackClass(scene, trackConfig, dataConfig, handleTilesetInfoReceived, animate) {
-      _classCallCheck(this, ImageTilesTrackClass);
-
-      // the tiles which should be visible but they're not necessarily fetched
-      var _this = _possibleConstructorReturn(this, (ImageTilesTrackClass.__proto__ || Object.getPrototypeOf(ImageTilesTrackClass)).call(this, scene, trackConfig.options));
-
-      _this.visibleTiles = new Set();
-      _this.visibleTileIds = new Set();
-
-      // the tiles we already have requests out for
-      _this.fetching = new Set();
-
-      // tiles we have fetched and ready to be rendered
-      _this.fetchedTiles = {};
-
-      // the graphics that have already been drawn for this track
-      _this.tileGraphics = {};
-
-      _this.options = _this.options || {};
-
-      var minXPos = _this.options.minXPos ? +_this.options.minXPos : 0;
-      var minYPos = _this.options.minYPos ? +_this.options.minYPos : 0;
-      var maxXPos = _this.options.maxXPos ? +_this.options.maxXPos : 3120000000;
-      var maxYPos = _this.options.maxYPos ? +_this.options.maxYPos : 3120000000;
-
-      _this.minPos = [minXPos, minYPos];
-      _this.maxPos = [maxXPos, maxYPos];
-      _this.maxZoom = _this.options.maxZoom ? +_this.options.maxZoom : 19;
-      _this.maxWidth = maxXPos;
-      _this.maxHeight = maxYPos;
-      _this.animate = animate;
-
-      _this.uuid = slugid_default.a.nice();
-      _this.refreshTilesDebounced = debounce(_this.refreshTiles.bind(_this), ZOOM_DEBOUNCE);
-
-      _this.dataConfig = dataConfig;
-      _this.tileSource = trimTrailingSlash(dataConfig.server) + '/tiles/?d=' + dataConfig.tilesetUid;
-
-      _this.dataFetcher = new DataFetcher(dataConfig);
-
-      _this.dataFetcher.tilesetInfo(function (tilesetInfo) {
-        _this.tilesetInfo = tilesetInfo;
-
-        if ('error' in _this.tilesetInfo) {
-          console.warn('Error retrieving tilesetInfo:', dataConfig, _this.tilesetInfo.error);
-
-          _this.error = _this.tilesetInfo.error;
-          _this.tilesetInfo = null;
-          _this.draw();
-          _this.animate();
-          return;
-        }
-
-        _this.maxZoom = +_this.tilesetInfo.max_zoom;
-        _this.maxWidth = +_this.tilesetInfo.max_size;
-        _this.maxHeight = +_this.tilesetInfo.max_size;
-        _this.maxDim = Math.max(_this.maxWidth, _this.maxHeight);
-
-        maxXPos = _this.options.maxXPos || +_this.tilesetInfo.max_size;
-        maxYPos = _this.options.maxYPos || +_this.tilesetInfo.max_size;
-
-        _this.maxPos = [maxXPos, maxYPos];
-
-        if (_this.options && _this.options.maxZoom) {
-          if (_this.options.maxZoom >= 0) {
-            _this.maxZoom = Math.min(_this.options.maxZoom, _this.maxZoom);
-          } else {
-            console.error('Invalid maxZoom on track:', _this);
-          }
-        }
-
-        _this.refreshTiles();
-
-        if (handleTilesetInfoReceived) {
-          handleTilesetInfoReceived(tilesetInfo);
-        }
-
-        _this.options.name = _this.options.name ? _this.options.name : tilesetInfo.name;
-
-        _this.draw();
-        _this.animate();
-      });
-      return _this;
-    }
-
-    /**
-     * Add graphics for tiles that have no graphics
-     */
-
-
-    _createClass(ImageTilesTrackClass, [{
-      key: 'addMissingGraphics',
-      value: function addMissingGraphics() {
-        var fetchedTileIDs = Object.keys(this.fetchedTiles);
-
-        for (var i = 0; i < fetchedTileIDs.length; i++) {
-          if (!(fetchedTileIDs[i] in this.tileGraphics)) {
-            var newGraphics = new PIXI.Graphics();
-
-            this.pMain.addChild(newGraphics);
-
-            this.fetchedTiles[fetchedTileIDs[i]].graphics = newGraphics;
-
-            this.initTile(this.fetchedTiles[fetchedTileIDs[i]]);
-
-            this.tileGraphics[fetchedTileIDs[i]] = newGraphics;
-          }
-        }
-      }
-
-      /**
-       * Check to see if all the visible tiles are loaded.
-       *
-       * If they are, remove all other tiles.
-       */
-
-    }, {
-      key: 'areAllVisibleTilesLoaded',
-      value: function areAllVisibleTilesLoaded() {
-        var fetchedTileIDs = new Set(Object.keys(this.fetchedTiles));
-        return [].concat(_toConsumableArray(this.visibleTileIds)).every(function (id) {
-          return fetchedTileIDs.has(id);
-        });
-      }
-
-      /**
-       * Calculate the current zoom level
-       *
-       * @return  {Number}  The current zoom level.
-       */
-
-    }, {
-      key: 'calculateZoomLevel',
-      value: function calculateZoomLevel() {
-        var xZoomLevel = tileProxy.calculateZoomLevel(this._xScale, this.minPos[0], this.maxPos[0]);
-        var yZoomLevel = tileProxy.calculateZoomLevel(this._xScale, this.minPos[1], this.maxPos[1]);
-
-        var zoomLevel = Math.min(Math.max(xZoomLevel, yZoomLevel), this.maxZoom);
-
-        if (this.options && this.options.maxZoom) {
-          if (this.options.maxZoom >= 0) {
-            zoomLevel = Math.min(this.options.maxZoom, zoomLevel);
-          } else {
-            console.error('Invalid maxZoom on track:', this);
-          }
-        }
-
-        return zoomLevel;
-      }
-
-      /**
-       * Calculate which tiles are visible
-       */
-
-    }, {
-      key: 'calculateVisibleTiles',
-      value: function calculateVisibleTiles() {
-        // if we don't know anything about this dataset, no point
-        // in trying to get tiles
-        if (!this.tilesetInfo) return;
-
-        this.zoomLevel = this.calculateZoomLevel();
-
-        this.xTiles = tileProxy.calculateTiles(this.zoomLevel, this._xScale, this.minPos[0], this.maxPos[0], this.maxZoom, this.maxDim);
-
-        this.yTiles = tileProxy.calculateTiles(this.zoomLevel, this._yScale, this.minPos[1], this.maxPos[1], this.maxZoom, this.maxDim);
-
-        var rows = this.yTiles;
-        var cols = this.xTiles;
-        var zoomLevel = this.zoomLevel;
-
-        // if we're mirroring tiles, then we only need tiles along the diagonal
-        var tiles = [];
-
-        // calculate the ids of the tiles that should be visible
-        for (var i = 0; i < rows.length; i++) {
-          for (var j = 0; j < cols.length; j++) {
-            var newTile = [zoomLevel, rows[i], cols[j]];
-
-            tiles.push(newTile);
-          }
-        }
-
-        this.setVisibleTiles(tiles);
-      }
-
-      /**
-       * Destroy tile graphics and unset sprite and tile data
-       *
-       * @param  {Object}  tile  Tile object to be destroyed.
-       */
-
-    }, {
-      key: 'destroyTile',
-      value: function destroyTile(tile) {
-        tile.graphics.destroy();
-        tile.sprite = undefined;
-        tile.tileData = undefined;
-      }
-
-      /**
-       * Wrapper for calling the parent class draw method.
-       */
-
-    }, {
-      key: 'draw',
-      value: function draw() {
-        if (this.delayDrawing) return;
-
-        _get(ImageTilesTrackClass.prototype.__proto__ || Object.getPrototypeOf(ImageTilesTrackClass.prototype), 'draw', this).call(this);
-      }
-
-      /**
-       * Fetch new tiles.
-       *
-       * @param  {Array}  toFetch  Tiles to be fetched.
-       */
-
-    }, {
-      key: 'fetchNewTiles',
-      value: function fetchNewTiles(toFetch) {
-        var _this2 = this;
-
-        if (toFetch.length > 0) {
-          var toFetchList = [].concat(_toConsumableArray(new Set(toFetch.map(function (x) {
-            return x.remoteId;
-          }))));
-
-          toFetchList.forEach(function (tileId) {
-            var parts = tileId.split('.');
-            var src = _this2.tileSource + '.' + tileId + '&raw=1';
-
-            var img = new Image();
-            img.crossOrigin = 'Anonymous';
-            img.src = src;
-
-            img.onload = function () {
-              var loadedTiles = {};
-              loadedTiles[tileId] = {
-                tileId: tileId,
-                img: img,
-                zoomLevel: +parts[0],
-                tilePos: [+parts[1], +parts[2]],
-                tileSrc: src
-              };
-
-              _this2.receivedTiles(loadedTiles);
-            };
-          });
-        }
-      }
-
-      /**
-       * Get the tile's position in its coordinate system.
-       *
-       * @param  {Integer}  zoomLevel  Current zoom level.
-       * @param  {Array}  tilePos   Tile position in form of [y, x].
-       * @return  {Object}  Tile position and dimension
-       */
-
-    }, {
-      key: 'getTilePosAndDimensions',
-      value: function getTilePosAndDimensions(zoomLevel, tilePos) {
-        var xTilePos = tilePos[1];
-        var yTilePos = tilePos[0];
-
-        var totalWidth = this.maxPos[0] - this.minPos[0];
-        var totalHeight = this.maxPos[0] - this.minPos[0];
-
-        var minX = 0;
-        var minY = 0;
-
-        var tileWidth = totalWidth / Math.pow(2, zoomLevel);
-        var tileHeight = totalHeight / Math.pow(2, zoomLevel);
-
-        var tileX = minX + xTilePos * tileWidth;
-        var tileY = minY + yTilePos * tileHeight;
-
-        return {
-          tileX: tileX,
-          tileY: tileY,
-          tileWidth: tileWidth,
-          tileHeight: tileHeight
-        };
-      }
-
-      /**
-       * Initialize tile, i.e., generate, position, and add sprite from tile image
-       *
-       * @param  {Object}  tile  Tile to be initialized
-       */
-
-    }, {
-      key: 'initTile',
-      value: function initTile(tile) {
-        // create the tile
-        // should be overwritten by child classes
-        var texture = new PIXI.Texture(new PIXI.BaseTexture(tile.tileData.img));
-        var sprite = new PIXI.Sprite(texture);
-
-        var graphics = tile.graphics;
-
-        tile.sprite = sprite;
-
-        this.setSpriteProperties(tile.sprite, tile.tileData.zoomLevel, tile.tileData.tilePos);
-
-        graphics.removeChildren();
-        graphics.addChild(tile.sprite);
-      }
-
-      /**
-       * Set or get minimum value of `this.scale`.
-       *
-       * @param  {Number}  value  If not undefined, value to be set as minimum
-       *   scale.
-       * @return  {Number}  The (new) minimum scale.
-       */
-
-    }, {
-      key: 'minValue',
-      value: function minValue(value) {
-        if (value) this.scale.minValue = value;
-        return this.scale.minValue;
-      }
-
-      /**
-       * Set or get maximum value of `this.scale`.
-       *
-       * @param  {Number}  value  If not undefined, value to be set as maximum
-       *   scale.
-       * @return  {Number}  The (new) maximum scale.
-       */
-
-    }, {
-      key: 'maxValue',
-      value: function maxValue(value) {
-        if (value) this.scale.maxValue = value;
-        return this.scale.maxValue;
-      }
-
-      /**
-       * Get minimum raw value of `this.scale`.
-       *
-       * @return  {Number}  The minimum raw scale. This is the minimum value from
-       *   all the tiles that hasn't been externally modified by locked scales.
-       */
-
-    }, {
-      key: 'minRawValue',
-      value: function minRawValue() {
-        return this.scale.minRawValue;
-      }
-
-      /**
-       * Get minimum raw value of `this.scale`.
-       *
-       * @return  {Number}  The minimum raw scale. This is the maximum value from
-       *   all the tiles that hasn't been externally modified by locked scales.
-       */
-
-    }, {
-      key: 'maxRawValue',
-      value: function maxRawValue() {
-        return this.scale.maxRawValue;
-      }
-
-      /**
-       * We've gotten a bunch of tiles from the server in
-       * response to a request from fetchTiles.
-       */
-
-    }, {
-      key: 'receivedTiles',
-      value: function receivedTiles(loadedTiles) {
-        var _this3 = this;
-
-        this.visibleTiles.filter(function (tile) {
-          return loadedTiles[tile.remoteId];
-        }).forEach(function (tile) {
-          if (!_this3.fetchedTiles[tile.tileId]) {
-            // this tile may have graphics associated with it
-            _this3.fetchedTiles[tile.tileId] = tile;
-          }
-
-          _this3.fetchedTiles[tile.tileId].tileData = loadedTiles[tile.remoteId];
-        });
-
-        Object.keys(loadedTiles).forEach(function (key) {
-          if (loadedTiles[key]) {
-            if (_this3.fetching.has(key)) {
-              _this3.fetching.delete(key);
-            }
-          }
-        });
-
-        this.synchronizeTilesAndGraphics();
-
-        // Mainly called to remove old unnecessary tiles
-        this.refreshTiles();
-
-        // we need to draw when we receive new data
-        this.draw();
-
-        // Let HiGlass know we need to re-render
-        this.animate();
-      }
-
-      /**
-       * Refresh tiles, i.e., determine tiles to be removed and new tiles to be
-       * loaded.
-       */
-
-    }, {
-      key: 'refreshTiles',
-      value: function refreshTiles() {
-        var _this4 = this;
-
-        this.calculateVisibleTiles();
-
-        // tiles that are fetched
-        var fetchedTileIDs = new Set(Object.keys(this.fetchedTiles));
-
-        // fetch the tiles that should be visible but haven't been fetched
-        // and aren't in the process of being fetched
-        var toFetch = [].concat(_toConsumableArray(this.visibleTiles)).filter(function (x) {
-          return !_this4.fetching.has(x.remoteId) && !fetchedTileIDs.has(x.tileId);
-        });
-
-        for (var i = 0; i < toFetch.length; i++) {
-          this.fetching.add(toFetch[i].remoteId);
-        }
-
-        // calculate which tiles are obsolete and remove them
-        // fetchedTileID are remote ids
-        var toRemove = [].concat(_toConsumableArray(fetchedTileIDs)).filter(function (x) {
-          return !_this4.visibleTileIds.has(x);
-        });
-
-        this.removeTiles(toRemove);
-        this.fetchNewTiles(toFetch);
-      }
-
-      /**
-       * Update reference scales and the sprite properties
-       *
-       * @method  refScalesChanged
-       * @author  Fritz Lekschas
-       * @date    2018-01-11
-       * @param   {Function}  refXScale  New X reference scale.
-       * @param   {Function}  refYScale  New Y reference scale.
-       */
-
-    }, {
-      key: 'refScalesChanged',
-      value: function refScalesChanged(refXScale, refYScale) {
-        var _this5 = this;
-
-        _get(ImageTilesTrackClass.prototype.__proto__ || Object.getPrototypeOf(ImageTilesTrackClass.prototype), 'refScalesChanged', this).call(this, refXScale, refYScale);
-
-        Object.keys(this.fetchedTiles).map(function (uid) {
-          return _this5.fetchedTiles[uid];
-        }).filter(function (tile) {
-          return tile.sprite;
-        }).forEach(function (tile) {
-          _this5.setSpriteProperties(tile.sprite, tile.tileData.zoomLevel, tile.tileData.tilePos);
-        });
-      }
-
-      /**
-       * Remove all tiles
-       */
-
-    }, {
-      key: 'removeAllTiles',
-      value: function removeAllTiles() {
-        var fetchedTileIDs = new Set(Object.keys(this.fetchedTiles));
-
-        this.removeTiles([].concat(_toConsumableArray(fetchedTileIDs)));
-      }
-
-      /**
-       * Remove obsolete tiles
-       *
-       * @param toRemoveIds: An array of tile ids to remove from the list of
-       *   fetched tiles.
-       */
-
-    }, {
-      key: 'removeTiles',
-      value: function removeTiles(toRemoveIds) {
-        var _this6 = this;
-
-        // if there's nothing to remove, don't bother doing anything
-        if (!toRemoveIds.length) {
-          return;
-        }
-
-        if (!this.areAllVisibleTilesLoaded()) {
-          return;
-        }
-
-        toRemoveIds.forEach(function (x) {
-          var tileIdStr = x;
-          _this6.destroyTile(_this6.fetchedTiles[tileIdStr]);
-
-          if (tileIdStr in _this6.tileGraphics) {
-            _this6.pMain.removeChild(_this6.tileGraphics[tileIdStr]);
-            delete _this6.tileGraphics[tileIdStr];
-          }
-
-          delete _this6.fetchedTiles[tileIdStr];
-        });
-
-        this.synchronizeTilesAndGraphics();
-        this.draw();
-      }
-
-      /**
-       * Set position and dimension of sprite
-       *
-       * @param  {Object}  sprite  Sprite to be adjusted
-       * @param  {Integer}  zoomLevel  Current zoom level
-       * @param  {Array}  tilePos  Pile position in form [y, x]
-       */
-
-    }, {
-      key: 'setSpriteProperties',
-      value: function setSpriteProperties(sprite, zoomLevel, tilePos) {
-        var _getTilePosAndDimensi = this.getTilePosAndDimensions(zoomLevel, tilePos),
-            tileX = _getTilePosAndDimensi.tileX,
-            tileY = _getTilePosAndDimensi.tileY,
-            tileWidth = _getTilePosAndDimensi.tileWidth,
-            tileHeight = _getTilePosAndDimensi.tileHeight;
-
-        sprite.x = this._refXScale(tileX);
-        sprite.y = this._refYScale(tileY);
-
-        var tileEndX = tileX + tileWidth;
-        var tileEndY = tileY + tileHeight;
-
-        sprite.width = this._refXScale(tileEndX) - this._refXScale(tileX);
-        sprite.height = this._refYScale(tileEndY) - this._refYScale(tileY);
-      }
-
-      /**
-       * Set which tiles are visible right now.
-       *
-       * @param tiles: A set of tiles which will be considered the currently visible
-       * tile positions.
-       */
-
-    }, {
-      key: 'setVisibleTiles',
-      value: function setVisibleTiles(tilePositions) {
-        var _this7 = this;
-
-        this.visibleTiles = tilePositions.map(function (x) {
-          return {
-            tileId: _this7.tileToLocalId(x),
-            remoteId: _this7.tileToRemoteId(x),
-            mirrored: x.mirrored
-          };
-        });
-
-        this.visibleTileIds = new Set(this.visibleTiles.map(function (x) {
-          return x.tileId;
-        }));
-      }
-
-      /**
-       * Make sure that we have a one to one mapping between tiles
-       * and graphics objects
-       */
-
-    }, {
-      key: 'synchronizeTilesAndGraphics',
-      value: function synchronizeTilesAndGraphics() {
-        // keep track of which tiles are visible at the moment
-        this.addMissingGraphics();
-      }
-
-      /**
-       * The local tile identifier
-       *
-       * @param  {Array}  tile  Array containing [zoomLevel, xPos, yPos]
-       * @return  {String}  Joined ID string
-       */
-
-    }, {
-      key: 'tileToLocalId',
-      value: function tileToLocalId(tile) {
-        return tile.join('.');
-      }
-
-      /**
-       * The tile identifier used on the server
-       *
-       * @param  {Array}  tile  Array containing [zoomLevel, xPos, yPos]
-       * @return  {String}  Joined ID string
-       */
-
-    }, {
-      key: 'tileToRemoteId',
-      value: function tileToRemoteId(tile) {
-        return tile.join('.');
-      }
-
-      /**
-       * Return the set of ids of all tiles which are both visible and fetched.
-       */
-
-    }, {
-      key: 'visibleAndFetchedIds',
-      value: function visibleAndFetchedIds() {
-        var _this8 = this;
-
-        return Object.keys(this.fetchedTiles).filter(function (x) {
-          return _this8.visibleTileIds.has(x);
-        });
-      }
-
-      /**
-       * Return fetched and visible tiles.
-       *
-       * @return  {Array}  Fetched and visible tiles
-       */
-
-    }, {
-      key: 'visibleAndFetchedTiles',
-      value: function visibleAndFetchedTiles() {
-        var _this9 = this;
-
-        return this.visibleAndFetchedIds().map(function (x) {
-          return _this9.fetchedTiles[x];
-        });
-      }
-
-      /**
-       * Scale and position change handler.
-       *
-       * @param  {Function}  newXScale  New X scale
-       * @param  {Function}  newYScale  New Y scale
-       * @param  {Number}  k  New scaling
-       * @param  {Number}  tx  New x position
-       * @param  {Number}  ty  New y position
-       */
-
-    }, {
-      key: 'zoomed',
-      value: function zoomed(newXScale, newYScale, k, tx, ty) {
-        _get(ImageTilesTrackClass.prototype.__proto__ || Object.getPrototypeOf(ImageTilesTrackClass.prototype), 'zoomed', this).call(this, newXScale, newYScale);
-
-        this.xScale(newXScale);
-        this.yScale(newYScale);
-
-        this.pMain.position.x = tx; // translateX;
-        this.pMain.position.y = ty; // translateY;
-
-        this.pMain.scale.x = k; // scaleX;
-        this.pMain.scale.y = k; // scaleY;
-
-        this.refreshTilesDebounced();
-      }
-    }]);
-
-    return ImageTilesTrackClass;
-  }(HGC.tracks.PixiTrack);
-
-  return new (Function.prototype.bind.apply(ImageTilesTrackClass, [null].concat(args)))();
+/**
+ * Returns the uuid represented by the given v4 or "nice" slug
+ */
+exports.decode = function(slug) {
+  var base64 = slug
+                  .replace(/-/g, '+')
+                  .replace(/_/g, '/')
+                  + '==';
+  return uuid.unparse(new Buffer(base64, 'base64'));
 };
 
-var parser = new DOMParser();
-var insetsStr = '<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="1.5"><path d="M9.5 10L12 7.5l3.5 3.5M.5 12L6 6l4.583 5.5" fill="none" stroke="currentColor"/><path d="M16 14H0V2h16v12zM1 3v10h14V3H1z" fill="currentColor"/><circle cx="9.5" cy="5.5" r="1" fill="none" stroke="currentColor"/></svg>';
-
-TiledImageTrack_ImageTilesTrack.config = {
-  type: 'image-tiles',
-  datatype: ['image-tiles'],
-  local: true,
-  orientation: '2d',
-  hidden: true,
-  name: 'Image Tiles',
-  thumbnail: parser.parseFromString(insetsStr, 'text/xml').documentElement
+/**
+ * Returns a randomly generated uuid v4 compliant slug
+ */
+exports.v4 = function() {
+  var bytes   = uuid.v4(null, new Buffer(16));
+  var base64  = bytes.toString('base64');
+  var slug = base64
+              .replace(/\+/g, '-')  // Replace + with - (see RFC 4648, sec. 5)
+              .replace(/\//g, '_')  // Replace / with _ (see RFC 4648, sec. 5)
+              .substring(0, 22);    // Drop '==' padding
+  return slug;
 };
 
-/* harmony default export */ var TiledImageTrack = (TiledImageTrack_ImageTilesTrack);
-// CONCATENATED MODULE: ./src/index.js
+/** 
+ * Returns a randomly generated uuid v4 compliant slug which conforms to a set
+ * of "nice" properties, at the cost of some entropy. Currently this means one
+ * extra fixed bit (the first bit of the uuid is set to 0) which guarantees the
+ * slug will begin with [A-Za-f]. For example such slugs don't require special
+ * handling when used as command line parameters (whereas non-nice slugs may
+ * start with `-` which can confuse command line tools).
+ *
+ * Potentially other "nice" properties may be added in future to further
+ * restrict the range of potential uuids that may be generated.
+ */
+exports.nice = function() {
+  var bytes   = uuid.v4(null, new Buffer(16));
+  bytes[0] = bytes[0] & 0x7f;  // unset first bit to ensure [A-Za-f] first char
+  var base64  = bytes.toString('base64');
+  var slug = base64
+              .replace(/\+/g, '-')  // Replace + with - (see RFC 4648, sec. 5)
+              .replace(/\//g, '_')  // Replace / with _ (see RFC 4648, sec. 5)
+              .substring(0, 22);    // Drop '==' padding
+  return slug;
+};
 
-
-
-
-src({
-  name: 'TiledImageTrack',
-  track: TiledImageTrack,
-  config: TiledImageTrack.config
-});
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(3).Buffer))
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global) {
-var rng;
-
-var crypto = global.crypto || global.msCrypto; // for IE 11
-if (crypto && crypto.getRandomValues) {
-  // WHATWG crypto-based RNG - http://wiki.whatwg.org/wiki/Crypto
-  // Moderately fast, high quality
-  var _rnds8 = new Uint8Array(16);
-  rng = function whatwgRNG() {
-    crypto.getRandomValues(_rnds8);
-    return _rnds8;
-  };
-}
-
-if (!rng) {
-  // Math.random()-based (RNG)
-  //
-  // If all else fails, use Math.random().  It's fast, but is of unspecified
-  // quality.
-  var  _rnds = new Array(16);
-  rng = function() {
-    for (var i = 0, r; i < 16; i++) {
-      if ((i & 0x03) === 0) r = Math.random() * 0x100000000;
-      _rnds[i] = r >>> ((i & 0x03) << 3) & 0xff;
-    }
-
-    return _rnds;
-  };
-}
-
-module.exports = rng;
-
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(0)))
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-//     uuid.js
-//
-//     Copyright (c) 2010-2012 Robert Kieffer
-//     MIT License - http://opensource.org/licenses/mit-license.php
-
-// Unique ID creation requires a high quality random # generator.  We feature
-// detect to determine the best RNG source, normalizing to a function that
-// returns 128-bits of randomness, since that's what's usually required
-var _rng = __webpack_require__(3);
-
-// Maps for number <-> hex string conversion
-var _byteToHex = [];
-var _hexToByte = {};
-for (var i = 0; i < 256; i++) {
-  _byteToHex[i] = (i + 0x100).toString(16).substr(1);
-  _hexToByte[_byteToHex[i]] = i;
-}
-
-// **`parse()` - Parse a UUID into it's component bytes**
-function parse(s, buf, offset) {
-  var i = (buf && offset) || 0, ii = 0;
-
-  buf = buf || [];
-  s.toLowerCase().replace(/[0-9a-f]{2}/g, function(oct) {
-    if (ii < 16) { // Don't overflow!
-      buf[i + ii++] = _hexToByte[oct];
-    }
-  });
-
-  // Zero out remaining bytes if string was short
-  while (ii < 16) {
-    buf[i + ii++] = 0;
-  }
-
-  return buf;
-}
-
-// **`unparse()` - Convert UUID byte array (ala parse()) into a string**
-function unparse(buf, offset) {
-  var i = offset || 0, bth = _byteToHex;
-  return  bth[buf[i++]] + bth[buf[i++]] +
-          bth[buf[i++]] + bth[buf[i++]] + '-' +
-          bth[buf[i++]] + bth[buf[i++]] + '-' +
-          bth[buf[i++]] + bth[buf[i++]] + '-' +
-          bth[buf[i++]] + bth[buf[i++]] + '-' +
-          bth[buf[i++]] + bth[buf[i++]] +
-          bth[buf[i++]] + bth[buf[i++]] +
-          bth[buf[i++]] + bth[buf[i++]];
-}
-
-// **`v1()` - Generate time-based UUID**
-//
-// Inspired by https://github.com/LiosK/UUID.js
-// and http://docs.python.org/library/uuid.html
-
-// random #'s we need to init node and clockseq
-var _seedBytes = _rng();
-
-// Per 4.5, create and 48-bit node id, (47 random bits + multicast bit = 1)
-var _nodeId = [
-  _seedBytes[0] | 0x01,
-  _seedBytes[1], _seedBytes[2], _seedBytes[3], _seedBytes[4], _seedBytes[5]
-];
-
-// Per 4.2.2, randomize (14 bit) clockseq
-var _clockseq = (_seedBytes[6] << 8 | _seedBytes[7]) & 0x3fff;
-
-// Previous uuid creation time
-var _lastMSecs = 0, _lastNSecs = 0;
-
-// See https://github.com/broofa/node-uuid for API details
-function v1(options, buf, offset) {
-  var i = buf && offset || 0;
-  var b = buf || [];
-
-  options = options || {};
-
-  var clockseq = options.clockseq !== undefined ? options.clockseq : _clockseq;
-
-  // UUID timestamps are 100 nano-second units since the Gregorian epoch,
-  // (1582-10-15 00:00).  JSNumbers aren't precise enough for this, so
-  // time is handled internally as 'msecs' (integer milliseconds) and 'nsecs'
-  // (100-nanoseconds offset from msecs) since unix epoch, 1970-01-01 00:00.
-  var msecs = options.msecs !== undefined ? options.msecs : new Date().getTime();
-
-  // Per 4.2.1.2, use count of uuid's generated during the current clock
-  // cycle to simulate higher resolution clock
-  var nsecs = options.nsecs !== undefined ? options.nsecs : _lastNSecs + 1;
-
-  // Time since last uuid creation (in msecs)
-  var dt = (msecs - _lastMSecs) + (nsecs - _lastNSecs)/10000;
-
-  // Per 4.2.1.2, Bump clockseq on clock regression
-  if (dt < 0 && options.clockseq === undefined) {
-    clockseq = clockseq + 1 & 0x3fff;
-  }
-
-  // Reset nsecs if clock regresses (new clockseq) or we've moved onto a new
-  // time interval
-  if ((dt < 0 || msecs > _lastMSecs) && options.nsecs === undefined) {
-    nsecs = 0;
-  }
-
-  // Per 4.2.1.2 Throw error if too many uuids are requested
-  if (nsecs >= 10000) {
-    throw new Error('uuid.v1(): Can\'t create more than 10M uuids/sec');
-  }
-
-  _lastMSecs = msecs;
-  _lastNSecs = nsecs;
-  _clockseq = clockseq;
-
-  // Per 4.1.4 - Convert from unix epoch to Gregorian epoch
-  msecs += 12219292800000;
-
-  // `time_low`
-  var tl = ((msecs & 0xfffffff) * 10000 + nsecs) % 0x100000000;
-  b[i++] = tl >>> 24 & 0xff;
-  b[i++] = tl >>> 16 & 0xff;
-  b[i++] = tl >>> 8 & 0xff;
-  b[i++] = tl & 0xff;
-
-  // `time_mid`
-  var tmh = (msecs / 0x100000000 * 10000) & 0xfffffff;
-  b[i++] = tmh >>> 8 & 0xff;
-  b[i++] = tmh & 0xff;
-
-  // `time_high_and_version`
-  b[i++] = tmh >>> 24 & 0xf | 0x10; // include version
-  b[i++] = tmh >>> 16 & 0xff;
-
-  // `clock_seq_hi_and_reserved` (Per 4.2.2 - include variant)
-  b[i++] = clockseq >>> 8 | 0x80;
-
-  // `clock_seq_low`
-  b[i++] = clockseq & 0xff;
-
-  // `node`
-  var node = options.node || _nodeId;
-  for (var n = 0; n < 6; n++) {
-    b[i + n] = node[n];
-  }
-
-  return buf ? buf : unparse(b);
-}
-
-// **`v4()` - Generate random UUID**
-
-// See https://github.com/broofa/node-uuid for API details
-function v4(options, buf, offset) {
-  // Deprecated - 'format' argument, as supported in v1.2
-  var i = buf && offset || 0;
-
-  if (typeof(options) == 'string') {
-    buf = options == 'binary' ? new Array(16) : null;
-    options = null;
-  }
-  options = options || {};
-
-  var rnds = options.random || (options.rng || _rng)();
-
-  // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
-  rnds[6] = (rnds[6] & 0x0f) | 0x40;
-  rnds[8] = (rnds[8] & 0x3f) | 0x80;
-
-  // Copy bytes to buffer, if provided
-  if (buf) {
-    for (var ii = 0; ii < 16; ii++) {
-      buf[i + ii] = rnds[ii];
-    }
-  }
-
-  return buf || unparse(rnds);
-}
-
-// Export public API
-var uuid = v4;
-uuid.v1 = v1;
-uuid.v4 = v4;
-uuid.parse = parse;
-uuid.unparse = unparse;
-
-module.exports = uuid;
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports) {
-
-var toString = {}.toString;
-
-module.exports = Array.isArray || function (arr) {
-  return toString.call(arr) == '[object Array]';
-};
-
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports) {
-
-exports.read = function (buffer, offset, isLE, mLen, nBytes) {
-  var e, m
-  var eLen = (nBytes * 8) - mLen - 1
-  var eMax = (1 << eLen) - 1
-  var eBias = eMax >> 1
-  var nBits = -7
-  var i = isLE ? (nBytes - 1) : 0
-  var d = isLE ? -1 : 1
-  var s = buffer[offset + i]
-
-  i += d
-
-  e = s & ((1 << (-nBits)) - 1)
-  s >>= (-nBits)
-  nBits += eLen
-  for (; nBits > 0; e = (e * 256) + buffer[offset + i], i += d, nBits -= 8) {}
-
-  m = e & ((1 << (-nBits)) - 1)
-  e >>= (-nBits)
-  nBits += mLen
-  for (; nBits > 0; m = (m * 256) + buffer[offset + i], i += d, nBits -= 8) {}
-
-  if (e === 0) {
-    e = 1 - eBias
-  } else if (e === eMax) {
-    return m ? NaN : ((s ? -1 : 1) * Infinity)
-  } else {
-    m = m + Math.pow(2, mLen)
-    e = e - eBias
-  }
-  return (s ? -1 : 1) * m * Math.pow(2, e - mLen)
-}
-
-exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
-  var e, m, c
-  var eLen = (nBytes * 8) - mLen - 1
-  var eMax = (1 << eLen) - 1
-  var eBias = eMax >> 1
-  var rt = (mLen === 23 ? Math.pow(2, -24) - Math.pow(2, -77) : 0)
-  var i = isLE ? 0 : (nBytes - 1)
-  var d = isLE ? 1 : -1
-  var s = value < 0 || (value === 0 && 1 / value < 0) ? 1 : 0
-
-  value = Math.abs(value)
-
-  if (isNaN(value) || value === Infinity) {
-    m = isNaN(value) ? 1 : 0
-    e = eMax
-  } else {
-    e = Math.floor(Math.log(value) / Math.LN2)
-    if (value * (c = Math.pow(2, -e)) < 1) {
-      e--
-      c *= 2
-    }
-    if (e + eBias >= 1) {
-      value += rt / c
-    } else {
-      value += rt * Math.pow(2, 1 - eBias)
-    }
-    if (value * c >= 2) {
-      e++
-      c /= 2
-    }
-
-    if (e + eBias >= eMax) {
-      m = 0
-      e = eMax
-    } else if (e + eBias >= 1) {
-      m = ((value * c) - 1) * Math.pow(2, mLen)
-      e = e + eBias
-    } else {
-      m = value * Math.pow(2, eBias - 1) * Math.pow(2, mLen)
-      e = 0
-    }
-  }
-
-  for (; mLen >= 8; buffer[offset + i] = m & 0xff, i += d, m /= 256, mLen -= 8) {}
-
-  e = (e << mLen) | m
-  eLen += mLen
-  for (; eLen > 0; buffer[offset + i] = e & 0xff, i += d, e /= 256, eLen -= 8) {}
-
-  buffer[offset + i - d] |= s * 128
-}
-
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.byteLength = byteLength
-exports.toByteArray = toByteArray
-exports.fromByteArray = fromByteArray
-
-var lookup = []
-var revLookup = []
-var Arr = typeof Uint8Array !== 'undefined' ? Uint8Array : Array
-
-var code = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
-for (var i = 0, len = code.length; i < len; ++i) {
-  lookup[i] = code[i]
-  revLookup[code.charCodeAt(i)] = i
-}
-
-// Support decoding URL-safe base64 strings, as Node.js does.
-// See: https://en.wikipedia.org/wiki/Base64#URL_applications
-revLookup['-'.charCodeAt(0)] = 62
-revLookup['_'.charCodeAt(0)] = 63
-
-function getLens (b64) {
-  var len = b64.length
-
-  if (len % 4 > 0) {
-    throw new Error('Invalid string. Length must be a multiple of 4')
-  }
-
-  // Trim off extra bytes after placeholder bytes are found
-  // See: https://github.com/beatgammit/base64-js/issues/42
-  var validLen = b64.indexOf('=')
-  if (validLen === -1) validLen = len
-
-  var placeHoldersLen = validLen === len
-    ? 0
-    : 4 - (validLen % 4)
-
-  return [validLen, placeHoldersLen]
-}
-
-// base64 is 4/3 + up to two characters of the original data
-function byteLength (b64) {
-  var lens = getLens(b64)
-  var validLen = lens[0]
-  var placeHoldersLen = lens[1]
-  return ((validLen + placeHoldersLen) * 3 / 4) - placeHoldersLen
-}
-
-function _byteLength (b64, validLen, placeHoldersLen) {
-  return ((validLen + placeHoldersLen) * 3 / 4) - placeHoldersLen
-}
-
-function toByteArray (b64) {
-  var tmp
-  var lens = getLens(b64)
-  var validLen = lens[0]
-  var placeHoldersLen = lens[1]
-
-  var arr = new Arr(_byteLength(b64, validLen, placeHoldersLen))
-
-  var curByte = 0
-
-  // if there are placeholders, only get up to the last complete 4 chars
-  var len = placeHoldersLen > 0
-    ? validLen - 4
-    : validLen
-
-  for (var i = 0; i < len; i += 4) {
-    tmp =
-      (revLookup[b64.charCodeAt(i)] << 18) |
-      (revLookup[b64.charCodeAt(i + 1)] << 12) |
-      (revLookup[b64.charCodeAt(i + 2)] << 6) |
-      revLookup[b64.charCodeAt(i + 3)]
-    arr[curByte++] = (tmp >> 16) & 0xFF
-    arr[curByte++] = (tmp >> 8) & 0xFF
-    arr[curByte++] = tmp & 0xFF
-  }
-
-  if (placeHoldersLen === 2) {
-    tmp =
-      (revLookup[b64.charCodeAt(i)] << 2) |
-      (revLookup[b64.charCodeAt(i + 1)] >> 4)
-    arr[curByte++] = tmp & 0xFF
-  }
-
-  if (placeHoldersLen === 1) {
-    tmp =
-      (revLookup[b64.charCodeAt(i)] << 10) |
-      (revLookup[b64.charCodeAt(i + 1)] << 4) |
-      (revLookup[b64.charCodeAt(i + 2)] >> 2)
-    arr[curByte++] = (tmp >> 8) & 0xFF
-    arr[curByte++] = tmp & 0xFF
-  }
-
-  return arr
-}
-
-function tripletToBase64 (num) {
-  return lookup[num >> 18 & 0x3F] +
-    lookup[num >> 12 & 0x3F] +
-    lookup[num >> 6 & 0x3F] +
-    lookup[num & 0x3F]
-}
-
-function encodeChunk (uint8, start, end) {
-  var tmp
-  var output = []
-  for (var i = start; i < end; i += 3) {
-    tmp =
-      ((uint8[i] << 16) & 0xFF0000) +
-      ((uint8[i + 1] << 8) & 0xFF00) +
-      (uint8[i + 2] & 0xFF)
-    output.push(tripletToBase64(tmp))
-  }
-  return output.join('')
-}
-
-function fromByteArray (uint8) {
-  var tmp
-  var len = uint8.length
-  var extraBytes = len % 3 // if we have 1 byte left, pad 2 bytes
-  var parts = []
-  var maxChunkLength = 16383 // must be multiple of 3
-
-  // go through the array every three bytes, we'll deal with trailing stuff later
-  for (var i = 0, len2 = len - extraBytes; i < len2; i += maxChunkLength) {
-    parts.push(encodeChunk(
-      uint8, i, (i + maxChunkLength) > len2 ? len2 : (i + maxChunkLength)
-    ))
-  }
-
-  // pad the end with zeros, but make sure to not forget the extra bytes
-  if (extraBytes === 1) {
-    tmp = uint8[len - 1]
-    parts.push(
-      lookup[tmp >> 2] +
-      lookup[(tmp << 4) & 0x3F] +
-      '=='
-    )
-  } else if (extraBytes === 2) {
-    tmp = (uint8[len - 2] << 8) + uint8[len - 1]
-    parts.push(
-      lookup[tmp >> 10] +
-      lookup[(tmp >> 4) & 0x3F] +
-      lookup[(tmp << 2) & 0x3F] +
-      '='
-    )
-  }
-
-  return parts.join('')
-}
-
-
-/***/ }),
-/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1402,9 +254,9 @@ function fromByteArray (uint8) {
 
 
 
-var base64 = __webpack_require__(7)
-var ieee754 = __webpack_require__(6)
-var isArray = __webpack_require__(5)
+var base64 = __webpack_require__(4)
+var ieee754 = __webpack_require__(5)
+var isArray = __webpack_require__(6)
 
 exports.Buffer = Buffer
 exports.SlowBuffer = SlowBuffer
@@ -3185,94 +2037,1257 @@ function isnan (val) {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(0)))
 
 /***/ }),
-/* 9 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(Buffer) {// The MIT License (MIT)
-//
-// Copyright (c) 2014 Jonas Finnemann Jensen
-//
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
+"use strict";
 
-var uuid = __webpack_require__(4);
 
-/**
- * Returns the given uuid as a 22 character slug. This can be a regular v4
- * slug or a "nice" slug.
- */
-exports.encode = function(uuid_) {
-  var bytes   = uuid.parse(uuid_);
-  var base64  = (new Buffer(bytes)).toString('base64');
-  var slug = base64
-              .replace(/\+/g, '-')  // Replace + with - (see RFC 4648, sec. 5)
-              .replace(/\//g, '_')  // Replace / with _ (see RFC 4648, sec. 5)
-              .substring(0, 22);    // Drop '==' padding
-  return slug;
+exports.byteLength = byteLength
+exports.toByteArray = toByteArray
+exports.fromByteArray = fromByteArray
+
+var lookup = []
+var revLookup = []
+var Arr = typeof Uint8Array !== 'undefined' ? Uint8Array : Array
+
+var code = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+for (var i = 0, len = code.length; i < len; ++i) {
+  lookup[i] = code[i]
+  revLookup[code.charCodeAt(i)] = i
+}
+
+// Support decoding URL-safe base64 strings, as Node.js does.
+// See: https://en.wikipedia.org/wiki/Base64#URL_applications
+revLookup['-'.charCodeAt(0)] = 62
+revLookup['_'.charCodeAt(0)] = 63
+
+function getLens (b64) {
+  var len = b64.length
+
+  if (len % 4 > 0) {
+    throw new Error('Invalid string. Length must be a multiple of 4')
+  }
+
+  // Trim off extra bytes after placeholder bytes are found
+  // See: https://github.com/beatgammit/base64-js/issues/42
+  var validLen = b64.indexOf('=')
+  if (validLen === -1) validLen = len
+
+  var placeHoldersLen = validLen === len
+    ? 0
+    : 4 - (validLen % 4)
+
+  return [validLen, placeHoldersLen]
+}
+
+// base64 is 4/3 + up to two characters of the original data
+function byteLength (b64) {
+  var lens = getLens(b64)
+  var validLen = lens[0]
+  var placeHoldersLen = lens[1]
+  return ((validLen + placeHoldersLen) * 3 / 4) - placeHoldersLen
+}
+
+function _byteLength (b64, validLen, placeHoldersLen) {
+  return ((validLen + placeHoldersLen) * 3 / 4) - placeHoldersLen
+}
+
+function toByteArray (b64) {
+  var tmp
+  var lens = getLens(b64)
+  var validLen = lens[0]
+  var placeHoldersLen = lens[1]
+
+  var arr = new Arr(_byteLength(b64, validLen, placeHoldersLen))
+
+  var curByte = 0
+
+  // if there are placeholders, only get up to the last complete 4 chars
+  var len = placeHoldersLen > 0
+    ? validLen - 4
+    : validLen
+
+  for (var i = 0; i < len; i += 4) {
+    tmp =
+      (revLookup[b64.charCodeAt(i)] << 18) |
+      (revLookup[b64.charCodeAt(i + 1)] << 12) |
+      (revLookup[b64.charCodeAt(i + 2)] << 6) |
+      revLookup[b64.charCodeAt(i + 3)]
+    arr[curByte++] = (tmp >> 16) & 0xFF
+    arr[curByte++] = (tmp >> 8) & 0xFF
+    arr[curByte++] = tmp & 0xFF
+  }
+
+  if (placeHoldersLen === 2) {
+    tmp =
+      (revLookup[b64.charCodeAt(i)] << 2) |
+      (revLookup[b64.charCodeAt(i + 1)] >> 4)
+    arr[curByte++] = tmp & 0xFF
+  }
+
+  if (placeHoldersLen === 1) {
+    tmp =
+      (revLookup[b64.charCodeAt(i)] << 10) |
+      (revLookup[b64.charCodeAt(i + 1)] << 4) |
+      (revLookup[b64.charCodeAt(i + 2)] >> 2)
+    arr[curByte++] = (tmp >> 8) & 0xFF
+    arr[curByte++] = tmp & 0xFF
+  }
+
+  return arr
+}
+
+function tripletToBase64 (num) {
+  return lookup[num >> 18 & 0x3F] +
+    lookup[num >> 12 & 0x3F] +
+    lookup[num >> 6 & 0x3F] +
+    lookup[num & 0x3F]
+}
+
+function encodeChunk (uint8, start, end) {
+  var tmp
+  var output = []
+  for (var i = start; i < end; i += 3) {
+    tmp =
+      ((uint8[i] << 16) & 0xFF0000) +
+      ((uint8[i + 1] << 8) & 0xFF00) +
+      (uint8[i + 2] & 0xFF)
+    output.push(tripletToBase64(tmp))
+  }
+  return output.join('')
+}
+
+function fromByteArray (uint8) {
+  var tmp
+  var len = uint8.length
+  var extraBytes = len % 3 // if we have 1 byte left, pad 2 bytes
+  var parts = []
+  var maxChunkLength = 16383 // must be multiple of 3
+
+  // go through the array every three bytes, we'll deal with trailing stuff later
+  for (var i = 0, len2 = len - extraBytes; i < len2; i += maxChunkLength) {
+    parts.push(encodeChunk(
+      uint8, i, (i + maxChunkLength) > len2 ? len2 : (i + maxChunkLength)
+    ))
+  }
+
+  // pad the end with zeros, but make sure to not forget the extra bytes
+  if (extraBytes === 1) {
+    tmp = uint8[len - 1]
+    parts.push(
+      lookup[tmp >> 2] +
+      lookup[(tmp << 4) & 0x3F] +
+      '=='
+    )
+  } else if (extraBytes === 2) {
+    tmp = (uint8[len - 2] << 8) + uint8[len - 1]
+    parts.push(
+      lookup[tmp >> 10] +
+      lookup[(tmp >> 4) & 0x3F] +
+      lookup[(tmp << 2) & 0x3F] +
+      '='
+    )
+  }
+
+  return parts.join('')
+}
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+exports.read = function (buffer, offset, isLE, mLen, nBytes) {
+  var e, m
+  var eLen = (nBytes * 8) - mLen - 1
+  var eMax = (1 << eLen) - 1
+  var eBias = eMax >> 1
+  var nBits = -7
+  var i = isLE ? (nBytes - 1) : 0
+  var d = isLE ? -1 : 1
+  var s = buffer[offset + i]
+
+  i += d
+
+  e = s & ((1 << (-nBits)) - 1)
+  s >>= (-nBits)
+  nBits += eLen
+  for (; nBits > 0; e = (e * 256) + buffer[offset + i], i += d, nBits -= 8) {}
+
+  m = e & ((1 << (-nBits)) - 1)
+  e >>= (-nBits)
+  nBits += mLen
+  for (; nBits > 0; m = (m * 256) + buffer[offset + i], i += d, nBits -= 8) {}
+
+  if (e === 0) {
+    e = 1 - eBias
+  } else if (e === eMax) {
+    return m ? NaN : ((s ? -1 : 1) * Infinity)
+  } else {
+    m = m + Math.pow(2, mLen)
+    e = e - eBias
+  }
+  return (s ? -1 : 1) * m * Math.pow(2, e - mLen)
+}
+
+exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
+  var e, m, c
+  var eLen = (nBytes * 8) - mLen - 1
+  var eMax = (1 << eLen) - 1
+  var eBias = eMax >> 1
+  var rt = (mLen === 23 ? Math.pow(2, -24) - Math.pow(2, -77) : 0)
+  var i = isLE ? 0 : (nBytes - 1)
+  var d = isLE ? 1 : -1
+  var s = value < 0 || (value === 0 && 1 / value < 0) ? 1 : 0
+
+  value = Math.abs(value)
+
+  if (isNaN(value) || value === Infinity) {
+    m = isNaN(value) ? 1 : 0
+    e = eMax
+  } else {
+    e = Math.floor(Math.log(value) / Math.LN2)
+    if (value * (c = Math.pow(2, -e)) < 1) {
+      e--
+      c *= 2
+    }
+    if (e + eBias >= 1) {
+      value += rt / c
+    } else {
+      value += rt * Math.pow(2, 1 - eBias)
+    }
+    if (value * c >= 2) {
+      e++
+      c /= 2
+    }
+
+    if (e + eBias >= eMax) {
+      m = 0
+      e = eMax
+    } else if (e + eBias >= 1) {
+      m = ((value * c) - 1) * Math.pow(2, mLen)
+      e = e + eBias
+    } else {
+      m = value * Math.pow(2, eBias - 1) * Math.pow(2, mLen)
+      e = 0
+    }
+  }
+
+  for (; mLen >= 8; buffer[offset + i] = m & 0xff, i += d, m /= 256, mLen -= 8) {}
+
+  e = (e << mLen) | m
+  eLen += mLen
+  for (; eLen > 0; buffer[offset + i] = e & 0xff, i += d, e /= 256, eLen -= 8) {}
+
+  buffer[offset + i - d] |= s * 128
+}
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+var toString = {}.toString;
+
+module.exports = Array.isArray || function (arr) {
+  return toString.call(arr) == '[object Array]';
 };
 
-/**
- * Returns the uuid represented by the given v4 or "nice" slug
- */
-exports.decode = function(slug) {
-  var base64 = slug
-                  .replace(/-/g, '+')
-                  .replace(/_/g, '/')
-                  + '==';
-  return uuid.unparse(new Buffer(base64, 'base64'));
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+//     uuid.js
+//
+//     Copyright (c) 2010-2012 Robert Kieffer
+//     MIT License - http://opensource.org/licenses/mit-license.php
+
+// Unique ID creation requires a high quality random # generator.  We feature
+// detect to determine the best RNG source, normalizing to a function that
+// returns 128-bits of randomness, since that's what's usually required
+var _rng = __webpack_require__(8);
+
+// Maps for number <-> hex string conversion
+var _byteToHex = [];
+var _hexToByte = {};
+for (var i = 0; i < 256; i++) {
+  _byteToHex[i] = (i + 0x100).toString(16).substr(1);
+  _hexToByte[_byteToHex[i]] = i;
+}
+
+// **`parse()` - Parse a UUID into it's component bytes**
+function parse(s, buf, offset) {
+  var i = (buf && offset) || 0, ii = 0;
+
+  buf = buf || [];
+  s.toLowerCase().replace(/[0-9a-f]{2}/g, function(oct) {
+    if (ii < 16) { // Don't overflow!
+      buf[i + ii++] = _hexToByte[oct];
+    }
+  });
+
+  // Zero out remaining bytes if string was short
+  while (ii < 16) {
+    buf[i + ii++] = 0;
+  }
+
+  return buf;
+}
+
+// **`unparse()` - Convert UUID byte array (ala parse()) into a string**
+function unparse(buf, offset) {
+  var i = offset || 0, bth = _byteToHex;
+  return  bth[buf[i++]] + bth[buf[i++]] +
+          bth[buf[i++]] + bth[buf[i++]] + '-' +
+          bth[buf[i++]] + bth[buf[i++]] + '-' +
+          bth[buf[i++]] + bth[buf[i++]] + '-' +
+          bth[buf[i++]] + bth[buf[i++]] + '-' +
+          bth[buf[i++]] + bth[buf[i++]] +
+          bth[buf[i++]] + bth[buf[i++]] +
+          bth[buf[i++]] + bth[buf[i++]];
+}
+
+// **`v1()` - Generate time-based UUID**
+//
+// Inspired by https://github.com/LiosK/UUID.js
+// and http://docs.python.org/library/uuid.html
+
+// random #'s we need to init node and clockseq
+var _seedBytes = _rng();
+
+// Per 4.5, create and 48-bit node id, (47 random bits + multicast bit = 1)
+var _nodeId = [
+  _seedBytes[0] | 0x01,
+  _seedBytes[1], _seedBytes[2], _seedBytes[3], _seedBytes[4], _seedBytes[5]
+];
+
+// Per 4.2.2, randomize (14 bit) clockseq
+var _clockseq = (_seedBytes[6] << 8 | _seedBytes[7]) & 0x3fff;
+
+// Previous uuid creation time
+var _lastMSecs = 0, _lastNSecs = 0;
+
+// See https://github.com/broofa/node-uuid for API details
+function v1(options, buf, offset) {
+  var i = buf && offset || 0;
+  var b = buf || [];
+
+  options = options || {};
+
+  var clockseq = options.clockseq !== undefined ? options.clockseq : _clockseq;
+
+  // UUID timestamps are 100 nano-second units since the Gregorian epoch,
+  // (1582-10-15 00:00).  JSNumbers aren't precise enough for this, so
+  // time is handled internally as 'msecs' (integer milliseconds) and 'nsecs'
+  // (100-nanoseconds offset from msecs) since unix epoch, 1970-01-01 00:00.
+  var msecs = options.msecs !== undefined ? options.msecs : new Date().getTime();
+
+  // Per 4.2.1.2, use count of uuid's generated during the current clock
+  // cycle to simulate higher resolution clock
+  var nsecs = options.nsecs !== undefined ? options.nsecs : _lastNSecs + 1;
+
+  // Time since last uuid creation (in msecs)
+  var dt = (msecs - _lastMSecs) + (nsecs - _lastNSecs)/10000;
+
+  // Per 4.2.1.2, Bump clockseq on clock regression
+  if (dt < 0 && options.clockseq === undefined) {
+    clockseq = clockseq + 1 & 0x3fff;
+  }
+
+  // Reset nsecs if clock regresses (new clockseq) or we've moved onto a new
+  // time interval
+  if ((dt < 0 || msecs > _lastMSecs) && options.nsecs === undefined) {
+    nsecs = 0;
+  }
+
+  // Per 4.2.1.2 Throw error if too many uuids are requested
+  if (nsecs >= 10000) {
+    throw new Error('uuid.v1(): Can\'t create more than 10M uuids/sec');
+  }
+
+  _lastMSecs = msecs;
+  _lastNSecs = nsecs;
+  _clockseq = clockseq;
+
+  // Per 4.1.4 - Convert from unix epoch to Gregorian epoch
+  msecs += 12219292800000;
+
+  // `time_low`
+  var tl = ((msecs & 0xfffffff) * 10000 + nsecs) % 0x100000000;
+  b[i++] = tl >>> 24 & 0xff;
+  b[i++] = tl >>> 16 & 0xff;
+  b[i++] = tl >>> 8 & 0xff;
+  b[i++] = tl & 0xff;
+
+  // `time_mid`
+  var tmh = (msecs / 0x100000000 * 10000) & 0xfffffff;
+  b[i++] = tmh >>> 8 & 0xff;
+  b[i++] = tmh & 0xff;
+
+  // `time_high_and_version`
+  b[i++] = tmh >>> 24 & 0xf | 0x10; // include version
+  b[i++] = tmh >>> 16 & 0xff;
+
+  // `clock_seq_hi_and_reserved` (Per 4.2.2 - include variant)
+  b[i++] = clockseq >>> 8 | 0x80;
+
+  // `clock_seq_low`
+  b[i++] = clockseq & 0xff;
+
+  // `node`
+  var node = options.node || _nodeId;
+  for (var n = 0; n < 6; n++) {
+    b[i + n] = node[n];
+  }
+
+  return buf ? buf : unparse(b);
+}
+
+// **`v4()` - Generate random UUID**
+
+// See https://github.com/broofa/node-uuid for API details
+function v4(options, buf, offset) {
+  // Deprecated - 'format' argument, as supported in v1.2
+  var i = buf && offset || 0;
+
+  if (typeof(options) == 'string') {
+    buf = options == 'binary' ? new Array(16) : null;
+    options = null;
+  }
+  options = options || {};
+
+  var rnds = options.random || (options.rng || _rng)();
+
+  // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
+  rnds[6] = (rnds[6] & 0x0f) | 0x40;
+  rnds[8] = (rnds[8] & 0x3f) | 0x80;
+
+  // Copy bytes to buffer, if provided
+  if (buf) {
+    for (var ii = 0; ii < 16; ii++) {
+      buf[i + ii] = rnds[ii];
+    }
+  }
+
+  return buf || unparse(rnds);
+}
+
+// Export public API
+var uuid = v4;
+uuid.v1 = v1;
+uuid.v4 = v4;
+uuid.parse = parse;
+uuid.unparse = unparse;
+
+module.exports = uuid;
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {
+var rng;
+
+var crypto = global.crypto || global.msCrypto; // for IE 11
+if (crypto && crypto.getRandomValues) {
+  // WHATWG crypto-based RNG - http://wiki.whatwg.org/wiki/Crypto
+  // Moderately fast, high quality
+  var _rnds8 = new Uint8Array(16);
+  rng = function whatwgRNG() {
+    crypto.getRandomValues(_rnds8);
+    return _rnds8;
+  };
+}
+
+if (!rng) {
+  // Math.random()-based (RNG)
+  //
+  // If all else fails, use Math.random().  It's fast, but is of unspecified
+  // quality.
+  var  _rnds = new Array(16);
+  rng = function() {
+    for (var i = 0, r; i < 16; i++) {
+      if ((i & 0x03) === 0) r = Math.random() * 0x100000000;
+      _rnds[i] = r >>> ((i & 0x03) << 3) & 0xff;
+    }
+
+    return _rnds;
+  };
+}
+
+module.exports = rng;
+
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(0)))
+
+/***/ }),
+/* 9 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+
+// CONCATENATED MODULE: ./node_modules/higlass-register/src/index.js
+window.higlassTracks = window.higlassTracks || {};
+window.higlassTracksByType = window.higlassTracksByType || {};
+
+const register = (trackDef) => {
+  window.higlassTracks[trackDef.name] = trackDef;
+  window.higlassTracksByType[trackDef.config.type] = trackDef;
 };
 
-/**
- * Returns a randomly generated uuid v4 compliant slug
- */
-exports.v4 = function() {
-  var bytes   = uuid.v4(null, new Buffer(16));
-  var base64  = bytes.toString('base64');
-  var slug = base64
-              .replace(/\+/g, '-')  // Replace + with - (see RFC 4648, sec. 5)
-              .replace(/\//g, '_')  // Replace / with _ (see RFC 4648, sec. 5)
-              .substring(0, 22);    // Drop '==' padding
-  return slug;
+/* harmony default export */ var src = (register);
+
+// EXTERNAL MODULE: ./node_modules/slugid/index.js
+var slugid = __webpack_require__(1);
+var slugid_default = /*#__PURE__*/__webpack_require__.n(slugid);
+
+// CONCATENATED MODULE: ./src/TiledImageTrack.js
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+var TiledImageTrack_ImageTilesTrack = function ImageTilesTrack(HGC) {
+  for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    args[_key - 1] = arguments[_key];
+  }
+
+  if (!new.target) {
+    throw new Error('Uncaught TypeError: Class constructor cannot be invoked without "new"');
+  }
+
+  // HiGlass Code
+  var PIXI = HGC.libraries.PIXI;
+
+  // Components
+
+  var DataFetcher = HGC.factories.DataFetcher;
+
+  // Services
+
+  var tileProxy = HGC.services.tileProxy;
+
+  // Utils
+
+  var _HGC$utils = HGC.utils,
+      debounce = _HGC$utils.debounce,
+      trimTrailingSlash = _HGC$utils.trimTrailingSlash;
+
+  // Configs
+
+  var ZOOM_DEBOUNCE = HGC.configs.ZOOM_DEBOUNCE;
+
+  var ImageTilesTrackClass = function (_HGC$tracks$PixiTrack) {
+    _inherits(ImageTilesTrackClass, _HGC$tracks$PixiTrack);
+
+    function ImageTilesTrackClass(scene, trackConfig, dataConfig, handleTilesetInfoReceived, animate) {
+      _classCallCheck(this, ImageTilesTrackClass);
+
+      // the tiles which should be visible but they're not necessarily fetched
+      var _this = _possibleConstructorReturn(this, (ImageTilesTrackClass.__proto__ || Object.getPrototypeOf(ImageTilesTrackClass)).call(this, scene, trackConfig.options));
+
+      _this.visibleTiles = new Set();
+      _this.visibleTileIds = new Set();
+
+      // the tiles we already have requests out for
+      _this.fetching = new Set();
+
+      // tiles we have fetched and ready to be rendered
+      _this.fetchedTiles = {};
+
+      // the graphics that have already been drawn for this track
+      _this.tileGraphics = {};
+
+      _this.options = _this.options || {};
+
+      var minXPos = _this.options.minXPos ? +_this.options.minXPos : 0;
+      var minYPos = _this.options.minYPos ? +_this.options.minYPos : 0;
+      var maxXPos = _this.options.maxXPos ? +_this.options.maxXPos : 3120000000;
+      var maxYPos = _this.options.maxYPos ? +_this.options.maxYPos : 3120000000;
+
+      _this.minPos = [minXPos, minYPos];
+      _this.maxPos = [maxXPos, maxYPos];
+      _this.maxZoom = _this.options.maxZoom ? +_this.options.maxZoom : 19;
+      _this.maxWidth = maxXPos;
+      _this.maxHeight = maxYPos;
+      _this.animate = animate;
+
+      _this.uuid = slugid_default.a.nice();
+      _this.refreshTilesDebounced = debounce(_this.refreshTiles.bind(_this), ZOOM_DEBOUNCE);
+
+      _this.dataConfig = dataConfig;
+      _this.tileSource = trimTrailingSlash(dataConfig.server) + '/tiles/?d=' + dataConfig.tilesetUid;
+
+      _this.dataFetcher = new DataFetcher(dataConfig);
+
+      _this.dataFetcher.tilesetInfo(function (tilesetInfo) {
+        _this.tilesetInfo = tilesetInfo;
+
+        if ('error' in _this.tilesetInfo) {
+          console.warn('Error retrieving tilesetInfo:', dataConfig, _this.tilesetInfo.error);
+
+          _this.error = _this.tilesetInfo.error;
+          _this.tilesetInfo = null;
+          _this.draw();
+          _this.animate();
+          return;
+        }
+
+        _this.maxZoom = +_this.tilesetInfo.max_zoom;
+        _this.maxWidth = +_this.tilesetInfo.max_size;
+        _this.maxHeight = +_this.tilesetInfo.max_size;
+        _this.maxDim = Math.max(_this.maxWidth, _this.maxHeight);
+
+        maxXPos = _this.options.maxXPos || +_this.tilesetInfo.max_size;
+        maxYPos = _this.options.maxYPos || +_this.tilesetInfo.max_size;
+
+        _this.maxPos = [maxXPos, maxYPos];
+
+        if (_this.options && _this.options.maxZoom) {
+          if (_this.options.maxZoom >= 0) {
+            _this.maxZoom = Math.min(_this.options.maxZoom, _this.maxZoom);
+          } else {
+            console.error('Invalid maxZoom on track:', _this);
+          }
+        }
+
+        _this.refreshTiles();
+
+        if (handleTilesetInfoReceived) {
+          handleTilesetInfoReceived(tilesetInfo);
+        }
+
+        _this.options.name = _this.options.name ? _this.options.name : tilesetInfo.name;
+
+        _this.draw();
+        _this.animate();
+      });
+      return _this;
+    }
+
+    /**
+     * Add graphics for tiles that have no graphics
+     */
+
+
+    _createClass(ImageTilesTrackClass, [{
+      key: 'addMissingGraphics',
+      value: function addMissingGraphics() {
+        var fetchedTileIDs = Object.keys(this.fetchedTiles);
+
+        for (var i = 0; i < fetchedTileIDs.length; i++) {
+          if (!(fetchedTileIDs[i] in this.tileGraphics)) {
+            var newGraphics = new PIXI.Graphics();
+
+            this.pMain.addChild(newGraphics);
+
+            this.fetchedTiles[fetchedTileIDs[i]].graphics = newGraphics;
+
+            this.initTile(this.fetchedTiles[fetchedTileIDs[i]]);
+
+            this.tileGraphics[fetchedTileIDs[i]] = newGraphics;
+          }
+        }
+      }
+
+      /**
+       * Check to see if all the visible tiles are loaded.
+       *
+       * If they are, remove all other tiles.
+       */
+
+    }, {
+      key: 'areAllVisibleTilesLoaded',
+      value: function areAllVisibleTilesLoaded() {
+        var fetchedTileIDs = new Set(Object.keys(this.fetchedTiles));
+        return [].concat(_toConsumableArray(this.visibleTileIds)).every(function (id) {
+          return fetchedTileIDs.has(id);
+        });
+      }
+
+      /**
+       * Calculate the current zoom level
+       *
+       * @return  {Number}  The current zoom level.
+       */
+
+    }, {
+      key: 'calculateZoomLevel',
+      value: function calculateZoomLevel() {
+        var xZoomLevel = tileProxy.calculateZoomLevel(this._xScale, this.minPos[0], this.maxPos[0]);
+        var yZoomLevel = tileProxy.calculateZoomLevel(this._xScale, this.minPos[1], this.maxPos[1]);
+
+        var zoomLevel = Math.min(Math.max(xZoomLevel, yZoomLevel), this.maxZoom);
+
+        if (this.options && this.options.maxZoom) {
+          if (this.options.maxZoom >= 0) {
+            zoomLevel = Math.min(this.options.maxZoom, zoomLevel);
+          } else {
+            console.error('Invalid maxZoom on track:', this);
+          }
+        }
+
+        return zoomLevel;
+      }
+
+      /**
+       * Calculate which tiles are visible
+       */
+
+    }, {
+      key: 'calculateVisibleTiles',
+      value: function calculateVisibleTiles() {
+        // if we don't know anything about this dataset, no point
+        // in trying to get tiles
+        if (!this.tilesetInfo) return;
+
+        this.zoomLevel = this.calculateZoomLevel();
+
+        this.xTiles = tileProxy.calculateTiles(this.zoomLevel, this._xScale, this.minPos[0], this.maxPos[0], this.maxZoom, this.maxDim);
+
+        this.yTiles = tileProxy.calculateTiles(this.zoomLevel, this._yScale, this.minPos[1], this.maxPos[1], this.maxZoom, this.maxDim);
+
+        var rows = this.yTiles;
+        var cols = this.xTiles;
+        var zoomLevel = this.zoomLevel;
+
+        // if we're mirroring tiles, then we only need tiles along the diagonal
+        var tiles = [];
+
+        // calculate the ids of the tiles that should be visible
+        for (var i = 0; i < rows.length; i++) {
+          for (var j = 0; j < cols.length; j++) {
+            var newTile = [zoomLevel, rows[i], cols[j]];
+
+            tiles.push(newTile);
+          }
+        }
+
+        this.setVisibleTiles(tiles);
+      }
+
+      /**
+       * Destroy tile graphics and unset sprite and tile data
+       *
+       * @param  {Object}  tile  Tile object to be destroyed.
+       */
+
+    }, {
+      key: 'destroyTile',
+      value: function destroyTile(tile) {
+        tile.graphics.destroy();
+        tile.sprite = undefined;
+        tile.tileData = undefined;
+      }
+
+      /**
+       * Wrapper for calling the parent class draw method.
+       */
+
+    }, {
+      key: 'draw',
+      value: function draw() {
+        if (this.delayDrawing) return;
+
+        _get(ImageTilesTrackClass.prototype.__proto__ || Object.getPrototypeOf(ImageTilesTrackClass.prototype), 'draw', this).call(this);
+      }
+
+      /**
+       * Fetch new tiles.
+       *
+       * @param  {Array}  toFetch  Tiles to be fetched.
+       */
+
+    }, {
+      key: 'fetchNewTiles',
+      value: function fetchNewTiles(toFetch) {
+        var _this2 = this;
+
+        if (toFetch.length > 0) {
+          var toFetchList = [].concat(_toConsumableArray(new Set(toFetch.map(function (x) {
+            return x.remoteId;
+          }))));
+
+          toFetchList.forEach(function (tileId) {
+            var parts = tileId.split('.');
+            var src = _this2.tileSource + '.' + tileId + '&raw=1';
+
+            var img = new Image();
+            img.crossOrigin = 'Anonymous';
+            img.src = src;
+
+            img.onload = function () {
+              var loadedTiles = {};
+              loadedTiles[tileId] = {
+                tileId: tileId,
+                img: img,
+                zoomLevel: +parts[0],
+                tilePos: [+parts[1], +parts[2]],
+                tileSrc: src
+              };
+
+              _this2.receivedTiles(loadedTiles);
+            };
+          });
+        }
+      }
+
+      /**
+       * Get the tile's position in its coordinate system.
+       *
+       * @param  {Integer}  zoomLevel  Current zoom level.
+       * @param  {Array}  tilePos   Tile position in form of [y, x].
+       * @return  {Object}  Tile position and dimension
+       */
+
+    }, {
+      key: 'getTilePosAndDimensions',
+      value: function getTilePosAndDimensions(zoomLevel, tilePos) {
+        var xTilePos = tilePos[1];
+        var yTilePos = tilePos[0];
+
+        var totalWidth = this.maxPos[0] - this.minPos[0];
+        var totalHeight = this.maxPos[0] - this.minPos[0];
+
+        var minX = 0;
+        var minY = 0;
+
+        var tileWidth = totalWidth / Math.pow(2, zoomLevel);
+        var tileHeight = totalHeight / Math.pow(2, zoomLevel);
+
+        var tileX = minX + xTilePos * tileWidth;
+        var tileY = minY + yTilePos * tileHeight;
+
+        return {
+          tileX: tileX,
+          tileY: tileY,
+          tileWidth: tileWidth,
+          tileHeight: tileHeight
+        };
+      }
+
+      /**
+       * Initialize tile, i.e., generate, position, and add sprite from tile image
+       *
+       * @param  {Object}  tile  Tile to be initialized
+       */
+
+    }, {
+      key: 'initTile',
+      value: function initTile(tile) {
+        // create the tile
+        // should be overwritten by child classes
+        var texture = new PIXI.Texture(new PIXI.BaseTexture(tile.tileData.img));
+        var sprite = new PIXI.Sprite(texture);
+
+        var graphics = tile.graphics;
+
+        tile.sprite = sprite;
+
+        this.setSpriteProperties(tile.sprite, tile.tileData.zoomLevel, tile.tileData.tilePos);
+
+        graphics.removeChildren();
+        graphics.addChild(tile.sprite);
+      }
+
+      /**
+       * Set or get minimum value of `this.scale`.
+       *
+       * @param  {Number}  value  If not undefined, value to be set as minimum
+       *   scale.
+       * @return  {Number}  The (new) minimum scale.
+       */
+
+    }, {
+      key: 'minValue',
+      value: function minValue(value) {
+        if (value) this.scale.minValue = value;
+        return this.scale.minValue;
+      }
+
+      /**
+       * Set or get maximum value of `this.scale`.
+       *
+       * @param  {Number}  value  If not undefined, value to be set as maximum
+       *   scale.
+       * @return  {Number}  The (new) maximum scale.
+       */
+
+    }, {
+      key: 'maxValue',
+      value: function maxValue(value) {
+        if (value) this.scale.maxValue = value;
+        return this.scale.maxValue;
+      }
+
+      /**
+       * Get minimum raw value of `this.scale`.
+       *
+       * @return  {Number}  The minimum raw scale. This is the minimum value from
+       *   all the tiles that hasn't been externally modified by locked scales.
+       */
+
+    }, {
+      key: 'minRawValue',
+      value: function minRawValue() {
+        return this.scale.minRawValue;
+      }
+
+      /**
+       * Get minimum raw value of `this.scale`.
+       *
+       * @return  {Number}  The minimum raw scale. This is the maximum value from
+       *   all the tiles that hasn't been externally modified by locked scales.
+       */
+
+    }, {
+      key: 'maxRawValue',
+      value: function maxRawValue() {
+        return this.scale.maxRawValue;
+      }
+
+      /**
+       * We've gotten a bunch of tiles from the server in
+       * response to a request from fetchTiles.
+       */
+
+    }, {
+      key: 'receivedTiles',
+      value: function receivedTiles(loadedTiles) {
+        var _this3 = this;
+
+        this.visibleTiles.filter(function (tile) {
+          return loadedTiles[tile.remoteId];
+        }).forEach(function (tile) {
+          if (!_this3.fetchedTiles[tile.tileId]) {
+            // this tile may have graphics associated with it
+            _this3.fetchedTiles[tile.tileId] = tile;
+          }
+
+          _this3.fetchedTiles[tile.tileId].tileData = loadedTiles[tile.remoteId];
+        });
+
+        Object.keys(loadedTiles).forEach(function (key) {
+          if (loadedTiles[key]) {
+            if (_this3.fetching.has(key)) {
+              _this3.fetching.delete(key);
+            }
+          }
+        });
+
+        this.synchronizeTilesAndGraphics();
+
+        // Mainly called to remove old unnecessary tiles
+        this.refreshTiles();
+
+        // we need to draw when we receive new data
+        this.draw();
+
+        // Let HiGlass know we need to re-render
+        this.animate();
+      }
+
+      /**
+       * Refresh tiles, i.e., determine tiles to be removed and new tiles to be
+       * loaded.
+       */
+
+    }, {
+      key: 'refreshTiles',
+      value: function refreshTiles() {
+        var _this4 = this;
+
+        this.calculateVisibleTiles();
+
+        // tiles that are fetched
+        var fetchedTileIDs = new Set(Object.keys(this.fetchedTiles));
+
+        // fetch the tiles that should be visible but haven't been fetched
+        // and aren't in the process of being fetched
+        var toFetch = [].concat(_toConsumableArray(this.visibleTiles)).filter(function (x) {
+          return !_this4.fetching.has(x.remoteId) && !fetchedTileIDs.has(x.tileId);
+        });
+
+        for (var i = 0; i < toFetch.length; i++) {
+          this.fetching.add(toFetch[i].remoteId);
+        }
+
+        // calculate which tiles are obsolete and remove them
+        // fetchedTileID are remote ids
+        var toRemove = [].concat(_toConsumableArray(fetchedTileIDs)).filter(function (x) {
+          return !_this4.visibleTileIds.has(x);
+        });
+
+        this.removeTiles(toRemove);
+        this.fetchNewTiles(toFetch);
+      }
+
+      /**
+       * Update reference scales and the sprite properties
+       *
+       * @method  refScalesChanged
+       * @author  Fritz Lekschas
+       * @date    2018-01-11
+       * @param   {Function}  refXScale  New X reference scale.
+       * @param   {Function}  refYScale  New Y reference scale.
+       */
+
+    }, {
+      key: 'refScalesChanged',
+      value: function refScalesChanged(refXScale, refYScale) {
+        var _this5 = this;
+
+        _get(ImageTilesTrackClass.prototype.__proto__ || Object.getPrototypeOf(ImageTilesTrackClass.prototype), 'refScalesChanged', this).call(this, refXScale, refYScale);
+
+        Object.keys(this.fetchedTiles).map(function (uid) {
+          return _this5.fetchedTiles[uid];
+        }).filter(function (tile) {
+          return tile.sprite;
+        }).forEach(function (tile) {
+          _this5.setSpriteProperties(tile.sprite, tile.tileData.zoomLevel, tile.tileData.tilePos);
+        });
+      }
+
+      /**
+       * Remove all tiles
+       */
+
+    }, {
+      key: 'removeAllTiles',
+      value: function removeAllTiles() {
+        var fetchedTileIDs = new Set(Object.keys(this.fetchedTiles));
+
+        this.removeTiles([].concat(_toConsumableArray(fetchedTileIDs)));
+      }
+
+      /**
+       * Remove obsolete tiles
+       *
+       * @param toRemoveIds: An array of tile ids to remove from the list of
+       *   fetched tiles.
+       */
+
+    }, {
+      key: 'removeTiles',
+      value: function removeTiles(toRemoveIds) {
+        var _this6 = this;
+
+        // if there's nothing to remove, don't bother doing anything
+        if (!toRemoveIds.length) {
+          return;
+        }
+
+        if (!this.areAllVisibleTilesLoaded()) {
+          return;
+        }
+
+        toRemoveIds.forEach(function (x) {
+          var tileIdStr = x;
+          _this6.destroyTile(_this6.fetchedTiles[tileIdStr]);
+
+          if (tileIdStr in _this6.tileGraphics) {
+            _this6.pMain.removeChild(_this6.tileGraphics[tileIdStr]);
+            delete _this6.tileGraphics[tileIdStr];
+          }
+
+          delete _this6.fetchedTiles[tileIdStr];
+        });
+
+        this.synchronizeTilesAndGraphics();
+        this.draw();
+      }
+
+      /**
+       * Set position and dimension of sprite
+       *
+       * @param  {Object}  sprite  Sprite to be adjusted
+       * @param  {Integer}  zoomLevel  Current zoom level
+       * @param  {Array}  tilePos  Pile position in form [y, x]
+       */
+
+    }, {
+      key: 'setSpriteProperties',
+      value: function setSpriteProperties(sprite, zoomLevel, tilePos) {
+        var _getTilePosAndDimensi = this.getTilePosAndDimensions(zoomLevel, tilePos),
+            tileX = _getTilePosAndDimensi.tileX,
+            tileY = _getTilePosAndDimensi.tileY,
+            tileWidth = _getTilePosAndDimensi.tileWidth,
+            tileHeight = _getTilePosAndDimensi.tileHeight;
+
+        sprite.x = this._refXScale(tileX);
+        sprite.y = this._refYScale(tileY);
+
+        var tileEndX = tileX + tileWidth;
+        var tileEndY = tileY + tileHeight;
+
+        sprite.width = this._refXScale(tileEndX) - this._refXScale(tileX);
+        sprite.height = this._refYScale(tileEndY) - this._refYScale(tileY);
+      }
+
+      /**
+       * Set which tiles are visible right now.
+       *
+       * @param tiles: A set of tiles which will be considered the currently visible
+       * tile positions.
+       */
+
+    }, {
+      key: 'setVisibleTiles',
+      value: function setVisibleTiles(tilePositions) {
+        var _this7 = this;
+
+        this.visibleTiles = tilePositions.map(function (x) {
+          return {
+            tileId: _this7.tileToLocalId(x),
+            remoteId: _this7.tileToRemoteId(x),
+            mirrored: x.mirrored
+          };
+        });
+
+        this.visibleTileIds = new Set(this.visibleTiles.map(function (x) {
+          return x.tileId;
+        }));
+      }
+
+      /**
+       * Make sure that we have a one to one mapping between tiles
+       * and graphics objects
+       */
+
+    }, {
+      key: 'synchronizeTilesAndGraphics',
+      value: function synchronizeTilesAndGraphics() {
+        // keep track of which tiles are visible at the moment
+        this.addMissingGraphics();
+      }
+
+      /**
+       * The local tile identifier
+       *
+       * @param  {Array}  tile  Array containing [zoomLevel, xPos, yPos]
+       * @return  {String}  Joined ID string
+       */
+
+    }, {
+      key: 'tileToLocalId',
+      value: function tileToLocalId(tile) {
+        return tile.join('.');
+      }
+
+      /**
+       * The tile identifier used on the server
+       *
+       * @param  {Array}  tile  Array containing [zoomLevel, xPos, yPos]
+       * @return  {String}  Joined ID string
+       */
+
+    }, {
+      key: 'tileToRemoteId',
+      value: function tileToRemoteId(tile) {
+        return tile.join('.');
+      }
+
+      /**
+       * Return the set of ids of all tiles which are both visible and fetched.
+       */
+
+    }, {
+      key: 'visibleAndFetchedIds',
+      value: function visibleAndFetchedIds() {
+        var _this8 = this;
+
+        return Object.keys(this.fetchedTiles).filter(function (x) {
+          return _this8.visibleTileIds.has(x);
+        });
+      }
+
+      /**
+       * Return fetched and visible tiles.
+       *
+       * @return  {Array}  Fetched and visible tiles
+       */
+
+    }, {
+      key: 'visibleAndFetchedTiles',
+      value: function visibleAndFetchedTiles() {
+        var _this9 = this;
+
+        return this.visibleAndFetchedIds().map(function (x) {
+          return _this9.fetchedTiles[x];
+        });
+      }
+
+      /**
+       * Scale and position change handler.
+       *
+       * @param  {Function}  newXScale  New X scale
+       * @param  {Function}  newYScale  New Y scale
+       * @param  {Number}  k  New scaling
+       * @param  {Number}  tx  New x position
+       * @param  {Number}  ty  New y position
+       */
+
+    }, {
+      key: 'zoomed',
+      value: function zoomed(newXScale, newYScale, k, tx, ty) {
+        _get(ImageTilesTrackClass.prototype.__proto__ || Object.getPrototypeOf(ImageTilesTrackClass.prototype), 'zoomed', this).call(this, newXScale, newYScale);
+
+        this.xScale(newXScale);
+        this.yScale(newYScale);
+
+        this.pMain.position.x = tx; // translateX;
+        this.pMain.position.y = ty; // translateY;
+
+        this.pMain.scale.x = k; // scaleX;
+        this.pMain.scale.y = k; // scaleY;
+
+        this.refreshTilesDebounced();
+      }
+    }]);
+
+    return ImageTilesTrackClass;
+  }(HGC.tracks.PixiTrack);
+
+  return new (Function.prototype.bind.apply(ImageTilesTrackClass, [null].concat(args)))();
 };
 
-/** 
- * Returns a randomly generated uuid v4 compliant slug which conforms to a set
- * of "nice" properties, at the cost of some entropy. Currently this means one
- * extra fixed bit (the first bit of the uuid is set to 0) which guarantees the
- * slug will begin with [A-Za-f]. For example such slugs don't require special
- * handling when used as command line parameters (whereas non-nice slugs may
- * start with `-` which can confuse command line tools).
- *
- * Potentially other "nice" properties may be added in future to further
- * restrict the range of potential uuids that may be generated.
- */
-exports.nice = function() {
-  var bytes   = uuid.v4(null, new Buffer(16));
-  bytes[0] = bytes[0] & 0x7f;  // unset first bit to ensure [A-Za-f] first char
-  var base64  = bytes.toString('base64');
-  var slug = base64
-              .replace(/\+/g, '-')  // Replace + with - (see RFC 4648, sec. 5)
-              .replace(/\//g, '_')  // Replace / with _ (see RFC 4648, sec. 5)
-              .substring(0, 22);    // Drop '==' padding
-  return slug;
+var parser = new DOMParser();
+var insetsStr = '<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="1.5"><path d="M9.5 10L12 7.5l3.5 3.5M.5 12L6 6l4.583 5.5" fill="none" stroke="currentColor"/><path d="M16 14H0V2h16v12zM1 3v10h14V3H1z" fill="currentColor"/><circle cx="9.5" cy="5.5" r="1" fill="none" stroke="currentColor"/></svg>';
+
+TiledImageTrack_ImageTilesTrack.config = {
+  type: 'image-tiles',
+  datatype: ['image-tiles'],
+  local: true,
+  orientation: '2d',
+  hidden: true,
+  name: 'Image Tiles',
+  thumbnail: parser.parseFromString(insetsStr, 'text/xml').documentElement
 };
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(8).Buffer))
+/* harmony default export */ var TiledImageTrack = (TiledImageTrack_ImageTilesTrack);
+// CONCATENATED MODULE: ./src/index.js
+
+
+
+
+src({
+  name: 'TiledImageTrack',
+  track: TiledImageTrack,
+  config: TiledImageTrack.config
+});
 
 /***/ })
 /******/ ]);
