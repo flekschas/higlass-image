@@ -1,6 +1,4 @@
-import slugid from 'slugid';
-
-const ImageTilesTrack = (HGC, ...args) => {
+const ImageTilesTrack = function ImageTilesTrack(HGC, ...args) {
   if (!new.target) {
     throw new Error(
       'Uncaught TypeError: Class constructor cannot be invoked without "new"',
@@ -59,7 +57,6 @@ const ImageTilesTrack = (HGC, ...args) => {
       this.maxHeight = maxYPos;
       this.animate = animate;
 
-      this.uuid = slugid.nice();
       this.refreshTilesDebounced = debounce(
         this.refreshTiles.bind(this), ZOOM_DEBOUNCE,
       );

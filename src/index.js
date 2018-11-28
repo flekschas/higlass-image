@@ -7,3 +7,5 @@ register({
   track: TiledImageTrack,
   config: TiledImageTrack.config,
 });
+
+export default TiledImageTrack;
