@@ -13,9 +13,9 @@ const configurator = (file, format, plugins) => ({
     name: 'GeoJsonTrack',
     format,
     file,
-    intro: `const VERSION = ${VERSION};\nconst DEPENDENCIES = ${DEPENDENCIES};`,
+    intro: `const VERSION = ${VERSION};\nconst DEPENDENCIES = ${DEPENDENCIES};`
   },
-  plugins,
+  plugins
 });
 
 const devConfig = configurator('dist/higlass-image2.js', 'umd', [
@@ -23,14 +23,14 @@ const devConfig = configurator('dist/higlass-image2.js', 'umd', [
   commonjs({ sourceMap: false }),
   buble(),
   filesize(),
-  visualizer(),
+  visualizer()
 ]);
 
 const prodConfig = configurator('dist/higlass-image2.min.js', 'umd', [
   resolve(),
   commonjs({ sourceMap: false }),
   buble(),
-  terser(),
+  terser()
 ]);
 
 export default [devConfig, prodConfig];

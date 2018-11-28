@@ -1,7 +1,7 @@
 const ImageTilesTrack = function ImageTilesTrack(HGC, ...args) {
   if (!new.target) {
     throw new Error(
-      'Uncaught TypeError: Class constructor cannot be invoked without "new"',
+      'Uncaught TypeError: Class constructor cannot be invoked without "new"'
     );
   }
 
@@ -24,11 +24,7 @@ const ImageTilesTrack = function ImageTilesTrack(HGC, ...args) {
     constructor(context, options) {
       super(context, options);
 
-      const {
-        dataConfig,
-        handleTilesetInfoReceived,
-        animate,
-      } = context;
+      const { dataConfig, handleTilesetInfoReceived, animate } = context;
 
       // the tiles which should be visible but they're not necessarily fetched
       this.visibleTiles = new Set();
@@ -58,22 +54,25 @@ const ImageTilesTrack = function ImageTilesTrack(HGC, ...args) {
       this.animate = animate;
 
       this.refreshTilesDebounced = debounce(
-        this.refreshTiles.bind(this), ZOOM_DEBOUNCE,
+        this.refreshTiles.bind(this),
+        ZOOM_DEBOUNCE
       );
 
       this.dataConfig = dataConfig;
-      this.tileSource = `${trimTrailingSlash(dataConfig.server)}/tiles/?d=${dataConfig.tilesetUid}`;
+      this.tileSource = `${trimTrailingSlash(dataConfig.server)}/tiles/?d=${
+        dataConfig.tilesetUid
+      }`;
 
       this.dataFetcher = new DataFetcher(dataConfig, pubSub);
 
-      this.dataFetcher.tilesetInfo((tilesetInfo) => {
+      this.dataFetcher.tilesetInfo(tilesetInfo => {
         this.tilesetInfo = tilesetInfo;
 
         if ('error' in this.tilesetInfo) {
           console.warn(
             'Error retrieving tilesetInfo:',
             dataConfig,
-            this.tilesetInfo.error,
+            this.tilesetInfo.error
           );
 
           this.error = this.tilesetInfo.error;
@@ -103,9 +102,13 @@ const ImageTilesTrack = function ImageTilesTrack(HGC, ...args) {
 
         this.refreshTiles();
 
-        if (handleTilesetInfoReceived) { handleTilesetInfoReceived(tilesetInfo); }
+        if (handleTilesetInfoReceived) {
+          handleTilesetInfoReceived(tilesetInfo);
+        }
 
-        this.options.name = this.options.name ? this.options.name : tilesetInfo.name;
+        this.options.name = this.options.name
+          ? this.options.name
+          : tilesetInfo.name;
 
         this.draw();
         this.animate();
@@ -152,12 +155,12 @@ const ImageTilesTrack = function ImageTilesTrack(HGC, ...args) {
       const xZoomLevel = tileProxy.calculateZoomLevel(
         this._xScale,
         this.minPos[0],
-        this.maxPos[0],
+        this.maxPos[0]
       );
       const yZoomLevel = tileProxy.calculateZoomLevel(
         this._xScale,
         this.minPos[1],
-        this.maxPos[1],
+        this.maxPos[1]
       );
 
       let zoomLevel = Math.min(Math.max(xZoomLevel, yZoomLevel), this.maxZoom);
@@ -189,7 +192,7 @@ const ImageTilesTrack = function ImageTilesTrack(HGC, ...args) {
         this.minPos[0],
         this.maxPos[0],
         this.maxZoom,
-        this.maxDim,
+        this.maxDim
       );
 
       this.yTiles = tileProxy.calculateTiles(
@@ -198,7 +201,7 @@ const ImageTilesTrack = function ImageTilesTrack(HGC, ...args) {
         this.minPos[1],
         this.maxPos[1],
         this.maxZoom,
-        this.maxDim,
+        this.maxDim
       );
 
       const rows = this.yTiles;
@@ -247,9 +250,9 @@ const ImageTilesTrack = function ImageTilesTrack(HGC, ...args) {
      */
     fetchNewTiles(toFetch) {
       if (toFetch.length > 0) {
-        const toFetchList = [...(new Set(toFetch.map(x => x.remoteId)))];
+        const toFetchList = [...new Set(toFetch.map(x => x.remoteId))];
 
-        toFetchList.forEach((tileId) => {
+        toFetchList.forEach(tileId => {
           const parts = tileId.split('.');
           const src = `${this.tileSource}.${tileId}&raw=1`;
 
@@ -264,7 +267,7 @@ const ImageTilesTrack = function ImageTilesTrack(HGC, ...args) {
               img,
               zoomLevel: +parts[0],
               tilePos: [+parts[1], +parts[2]],
-              tileSrc: src,
+              tileSrc: src
             };
 
             this.receivedTiles(loadedTiles);
@@ -290,17 +293,17 @@ const ImageTilesTrack = function ImageTilesTrack(HGC, ...args) {
       const minX = 0;
       const minY = 0;
 
-      const tileWidth = totalWidth / (2 ** zoomLevel);
-      const tileHeight = totalHeight / (2 ** zoomLevel);
+      const tileWidth = totalWidth / 2 ** zoomLevel;
+      const tileHeight = totalHeight / 2 ** zoomLevel;
 
-      const tileX = minX + (xTilePos * tileWidth);
-      const tileY = minY + (yTilePos * tileHeight);
+      const tileX = minX + xTilePos * tileWidth;
+      const tileY = minY + yTilePos * tileHeight;
 
       return {
         tileX,
         tileY,
         tileWidth,
-        tileHeight,
+        tileHeight
       };
     }
 
@@ -320,7 +323,9 @@ const ImageTilesTrack = function ImageTilesTrack(HGC, ...args) {
       tile.sprite = sprite;
 
       this.setSpriteProperties(
-        tile.sprite, tile.tileData.zoomLevel, tile.tileData.tilePos,
+        tile.sprite,
+        tile.tileData.zoomLevel,
+        tile.tileData.tilePos
       );
 
       graphics.removeChildren();
@@ -378,7 +383,7 @@ const ImageTilesTrack = function ImageTilesTrack(HGC, ...args) {
     receivedTiles(loadedTiles) {
       this.visibleTiles
         .filter(tile => loadedTiles[tile.remoteId])
-        .forEach((tile) => {
+        .forEach(tile => {
           if (!this.fetchedTiles[tile.tileId]) {
             // this tile may have graphics associated with it
             this.fetchedTiles[tile.tileId] = tile;
@@ -387,9 +392,11 @@ const ImageTilesTrack = function ImageTilesTrack(HGC, ...args) {
           this.fetchedTiles[tile.tileId].tileData = loadedTiles[tile.remoteId];
         });
 
-      Object.keys(loadedTiles).forEach((key) => {
+      Object.keys(loadedTiles).forEach(key => {
         if (loadedTiles[key]) {
-          if (this.fetching.has(key)) { this.fetching.delete(key); }
+          if (this.fetching.has(key)) {
+            this.fetching.delete(key);
+          }
         }
       });
 
@@ -417,10 +424,9 @@ const ImageTilesTrack = function ImageTilesTrack(HGC, ...args) {
 
       // fetch the tiles that should be visible but haven't been fetched
       // and aren't in the process of being fetched
-      const toFetch = [...this.visibleTiles]
-        .filter(x => (
-          !this.fetching.has(x.remoteId) && !fetchedTileIDs.has(x.tileId)
-        ));
+      const toFetch = [...this.visibleTiles].filter(
+        x => !this.fetching.has(x.remoteId) && !fetchedTileIDs.has(x.tileId)
+      );
 
       for (let i = 0; i < toFetch.length; i++) {
         this.fetching.add(toFetch[i].remoteId);
@@ -428,8 +434,9 @@ const ImageTilesTrack = function ImageTilesTrack(HGC, ...args) {
 
       // calculate which tiles are obsolete and remove them
       // fetchedTileID are remote ids
-      const toRemove = [...fetchedTileIDs]
-        .filter(x => !this.visibleTileIds.has(x));
+      const toRemove = [...fetchedTileIDs].filter(
+        x => !this.visibleTileIds.has(x)
+      );
 
       this.removeTiles(toRemove);
       this.fetchNewTiles(toFetch);
@@ -450,9 +457,11 @@ const ImageTilesTrack = function ImageTilesTrack(HGC, ...args) {
       Object.keys(this.fetchedTiles)
         .map(uid => this.fetchedTiles[uid])
         .filter(tile => tile.sprite)
-        .forEach((tile) => {
+        .forEach(tile => {
           this.setSpriteProperties(
-            tile.sprite, tile.tileData.zoomLevel, tile.tileData.tilePos,
+            tile.sprite,
+            tile.tileData.zoomLevel,
+            tile.tileData.tilePos
           );
         });
     }
@@ -474,11 +483,15 @@ const ImageTilesTrack = function ImageTilesTrack(HGC, ...args) {
      */
     removeTiles(toRemoveIds) {
       // if there's nothing to remove, don't bother doing anything
-      if (!toRemoveIds.length) { return; }
+      if (!toRemoveIds.length) {
+        return;
+      }
 
-      if (!this.areAllVisibleTilesLoaded()) { return; }
+      if (!this.areAllVisibleTilesLoaded()) {
+        return;
+      }
 
-      toRemoveIds.forEach((x) => {
+      toRemoveIds.forEach(x => {
         const tileIdStr = x;
         this.destroyTile(this.fetchedTiles[tileIdStr]);
 
@@ -503,7 +516,10 @@ const ImageTilesTrack = function ImageTilesTrack(HGC, ...args) {
      */
     setSpriteProperties(sprite, zoomLevel, tilePos) {
       const {
-        tileX, tileY, tileWidth, tileHeight,
+        tileX,
+        tileY,
+        tileWidth,
+        tileHeight
       } = this.getTilePosAndDimensions(zoomLevel, tilePos);
 
       sprite.x = this._refXScale(tileX);
@@ -526,7 +542,7 @@ const ImageTilesTrack = function ImageTilesTrack(HGC, ...args) {
       this.visibleTiles = tilePositions.map(x => ({
         tileId: this.tileToLocalId(x),
         remoteId: this.tileToRemoteId(x),
-        mirrored: x.mirrored,
+        mirrored: x.mirrored
       }));
 
       this.visibleTileIds = new Set(this.visibleTiles.map(x => x.tileId));
@@ -565,8 +581,9 @@ const ImageTilesTrack = function ImageTilesTrack(HGC, ...args) {
      * Return the set of ids of all tiles which are both visible and fetched.
      */
     visibleAndFetchedIds() {
-      return Object.keys(this.fetchedTiles)
-        .filter(x => this.visibleTileIds.has(x));
+      return Object.keys(this.fetchedTiles).filter(x =>
+        this.visibleTileIds.has(x)
+      );
     }
 
     /**
@@ -607,7 +624,8 @@ const ImageTilesTrack = function ImageTilesTrack(HGC, ...args) {
 };
 
 const parser = new DOMParser();
-const insetsStr = '<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="1.5"><path d="M9.5 10L12 7.5l3.5 3.5M.5 12L6 6l4.583 5.5" fill="none" stroke="currentColor"/><path d="M16 14H0V2h16v12zM1 3v10h14V3H1z" fill="currentColor"/><circle cx="9.5" cy="5.5" r="1" fill="none" stroke="currentColor"/></svg>';
+const insetsStr =
+  '<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="1.5"><path d="M9.5 10L12 7.5l3.5 3.5M.5 12L6 6l4.583 5.5" fill="none" stroke="currentColor"/><path d="M16 14H0V2h16v12zM1 3v10h14V3H1z" fill="currentColor"/><circle cx="9.5" cy="5.5" r="1" fill="none" stroke="currentColor"/></svg>';
 
 ImageTilesTrack.config = {
   type: 'image-tiles',
@@ -616,7 +634,7 @@ ImageTilesTrack.config = {
   orientation: '2d',
   hidden: true,
   name: 'Image Tiles',
-  thumbnail: parser.parseFromString(insetsStr, 'text/xml').documentElement,
+  thumbnail: parser.parseFromString(insetsStr, 'text/xml').documentElement
 };
 
 ImageTilesTrack.version = VERSION;
