@@ -14,7 +14,7 @@ const ImageTilesTrack = (HGC, ...args) => {
   const { DataFetcher } = HGC.factories;
 
   // Services
-  const { tileProxy } = HGC.services;
+  const { pubSub, tileProxy } = HGC.services;
 
   // Utils
   const { debounce, trimTrailingSlash } = HGC.utils;
@@ -23,10 +23,14 @@ const ImageTilesTrack = (HGC, ...args) => {
   const { ZOOM_DEBOUNCE } = HGC.configs;
 
   class ImageTilesTrackClass extends HGC.tracks.PixiTrack {
-    constructor(
-      scene, trackConfig, dataConfig, handleTilesetInfoReceived, animate,
-    ) {
-      super(scene, trackConfig.options);
+    constructor(context, options) {
+      super(context, options);
+
+      const {
+        dataConfig,
+        handleTilesetInfoReceived,
+        animate,
+      } = context;
 
       // the tiles which should be visible but they're not necessarily fetched
       this.visibleTiles = new Set();
@@ -63,7 +67,7 @@ const ImageTilesTrack = (HGC, ...args) => {
       this.dataConfig = dataConfig;
       this.tileSource = `${trimTrailingSlash(dataConfig.server)}/tiles/?d=${dataConfig.tilesetUid}`;
 
-      this.dataFetcher = new DataFetcher(dataConfig);
+      this.dataFetcher = new DataFetcher(dataConfig, pubSub);
 
       this.dataFetcher.tilesetInfo((tilesetInfo) => {
         this.tilesetInfo = tilesetInfo;
@@ -617,5 +621,8 @@ ImageTilesTrack.config = {
   name: 'Image Tiles',
   thumbnail: parser.parseFromString(insetsStr, 'text/xml').documentElement,
 };
+
+ImageTilesTrack.version = VERSION;
+ImageTilesTrack.dependencies = DEPENDENCIES;
 
 export default ImageTilesTrack;
