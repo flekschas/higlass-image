@@ -1,6 +1,8 @@
 ### v0.2.0
 
 - Compatible with HiGlass `v1.3`
+- Switch main build process to Rollup
+- Update Babel to `v7`, added husky, lint-staged, and stylelint for better linting
 
 ### v0.1.2
 
