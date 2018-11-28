@@ -18,7 +18,7 @@ const configurator = (file, format, plugins) => ({
   plugins
 });
 
-const devConfig = configurator('dist/higlass-image2.js', 'umd', [
+const devConfig = configurator('dist/higlass-image.js', 'umd', [
   resolve(),
   commonjs({ sourceMap: false }),
   buble(),
@@ -26,7 +26,7 @@ const devConfig = configurator('dist/higlass-image2.js', 'umd', [
   visualizer()
 ]);
 
-const prodConfig = configurator('dist/higlass-image2.min.js', 'umd', [
+const prodConfig = configurator('dist/higlass-image.min.js', 'umd', [
   resolve(),
   commonjs({ sourceMap: false }),
   buble(),
