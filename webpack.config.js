@@ -46,7 +46,7 @@ module.exports = (envs, argv) => ({
   },
   devServer: {
     contentBase: [
-      path.join(__dirname, 'node_modules/higlass/build'),
+      path.join(__dirname, 'node_modules/higlass/dist'),
     ],
     watchContentBase: true,
   },
