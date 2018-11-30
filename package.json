@@ -1,6 +1,6 @@
 {
   "name": "higlass-image",
-  "version": "0.2.0-rc.2",
+  "version": "0.2.0-rc.3",
   "description": "A plugin track for viewing image data in HiGlass",
   "keywords": [
     "HiGlass",
@@ -58,7 +58,7 @@
     "prettier": "^1.15.2",
     "pretty-quick": "^1.8.0",
     "rollup": "^0.67.3",
-    "rollup-plugin-buble": "^0.19.4",
+    "rollup-plugin-babel": "^4.0.3",
     "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-filesize": "^5.0.1",
     "rollup-plugin-json": "^3.1.0",
