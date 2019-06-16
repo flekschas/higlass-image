@@ -27,7 +27,7 @@
   ],
   "scripts": {
     "build": "rollup -c; webpack --mode production; cp node_modules/higlass/dist/hglib.js ./docs; cp node_modules/higlass/dist/hglib.css ./docs",
-    "ghp": "npm run prerelease; rm -rf ../higlass-image-ghp/*; cp -r ./dist/* ../higlass-image-ghp/; touch ../higlass-image-ghp/.nojekyll; touch ../higlass-image-ghp/CNAME; echo 'higlass-image.lekschas.de' > ../higlass-image-ghp/CNAME; cp ./node_modules/higlass/dist/scripts/hglib.js ../higlass-image-ghp/; cp ./node_modules/higlass/dist/styles/hglib.css ../higlass-image-ghp/",
+    "ghp": "npm run prerelease; rm -rf ../higlass-image-ghp/*; cp -r ./dist/* ../higlass-image-ghp/; touch ../higlass-image-ghp/.nojekyll; touch ../higlass-image-ghp/CNAME; echo 'higlass-image.lekschas.de' > ../higlass-image-ghp/CNAME; cp ./node_modules/higlass/dist/hglib.js ../higlass-image-ghp/; cp ./node_modules/higlass/dist/hglib.css ../higlass-image-ghp/",
     "lint": "eslint src rollup.config.js webpack.config.js; stylelint src",
     "prerelease": "rm -rf dist/*; npm run build; zip -r dist.zip dist",
     "start": "webpack-dev-server --mode development --open"
