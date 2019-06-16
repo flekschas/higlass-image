@@ -10,7 +10,7 @@ const { VERSION, DEPENDENCIES } = require('./globals.js');
 const configurator = (file, format, plugins) => ({
   input: 'src/index.js',
   output: {
-    name: 'GeoJsonTrack',
+    name: 'ImageTrack',
     format,
     file,
     intro: `const VERSION = ${VERSION};\nconst DEPENDENCIES = ${DEPENDENCIES};`
