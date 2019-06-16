@@ -1,6 +1,6 @@
 {
   "name": "higlass-image",
-  "version": "0.2.0-rc.3",
+  "version": "0.2.0",
   "description": "A plugin track for viewing image data in HiGlass",
   "keywords": [
     "HiGlass",
