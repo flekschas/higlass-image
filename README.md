@@ -5,6 +5,7 @@
 [![HiGlass](https://img.shields.io/badge/higlass-👍-red.svg?colorB=000000)](http://higlass.io)
 [![Demo](https://img.shields.io/badge/demo-🙈-red.svg?colorB=000000)](http://higlass-image.lekschas.de/)
 [![Build Status](https://img.shields.io/travis/flekschas/higlass-image/master.svg?colorB=000000)](https://travis-ci.org/flekschas/higlass-image)
+[![code style prettier](https://img.shields.io/badge/code_style-prettier-80a1ff.svg)](https://github.com/prettier/prettier)
 
 ![HiGlass showing](/teaser.jpg?raw=true "Rio de Janeiro by Rio HK")
 
@@ -15,9 +16,9 @@ HiGlass in dark mode showing a beautiful gigapixel image of [Rio de Janeiro](htt
 **Note**: This is the source code for image tracks only! You might want to check out the following repositories as well:
 
 - **Image tiles to SQLite converter:** https://github.com/flekschas/image-tiles-to-sqlite
-- HiGlass viewer: https://github.com/hms-dbmi/higlass
-- HiGlass server: https://github.com/hms-dbmi/higlass-server
-- HiGlass docker: https://github.com/hms-dbmi/higlass-docker
+- HiGlass viewer: https://github.com/higlass/higlass
+- HiGlass server: https://github.com/higlass/higlass-server
+- HiGlass docker: https://github.com/higlass/higlass-docker
 
 ## Installation
 
